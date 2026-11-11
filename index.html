@@ -44,7 +44,7 @@
       <div id="focus"></div>
       <div id="missed-symbols"></div>
     </aside>
-    <details class="inventory"><summary>Review the current inventory for this level</summary><div id="inventory" class="inventory-grid"></div></details>
+    <details class="inventory"><summary>Review the symbol set for this level</summary><div id="inventory" class="inventory-grid"></div></details>
     <p class="attribution">Source of sound files: <a href="https://www.internationalphoneticassociation.org/IPAcharts/IPA_charts_EI/IPA_charts_EI.html" target="_blank" rel="noopener">International Phonetics Association Interactive IPA Chart</a>. (See chart for additional review)</p>
   </main>
   <script>
@@ -134,14 +134,15 @@
     }
     function recordAnswer(correct, differences){
       progress.attempted++; if(correct) progress.correct++; else differences.forEach(({feature,expected})=>{ progress.misses[feature]??={}; progress.misses[feature][expected]=(progress.misses[feature][expected]||0)+1; });
-      if(!correct&&state.mode==='description') progress.missedSymbols[state.item.symbol]=(progress.missedSymbols[state.item.symbol]||0)+1;
+      if(!correct) progress.missedSymbols[state.item.symbol]=(progress.missedSymbols[state.item.symbol]||0)+1;
       localStorage.setItem(progressKey,JSON.stringify(progress)); renderStudy();
     }
     function mutate(text, feature, sets){
       const from=featureValue(text,sets[feature]); if(!from) return null;
       const alternatives=sets[feature].filter(value=>value!==from);
       const to=alternatives[Math.floor(Math.random()*alternatives.length)];
-      return text.replace(from,to);
+      const displayedFrom=from==='dental'&&text.includes('(inter)dental')?'(inter)dental':from;
+      return text.replace(displayedFrom,to);
     }
     function featureChoices(item){
       const canonical=item.canonical; const sets=item.kind==='vowel' ? vowelFeatures : consonantFeatures;
