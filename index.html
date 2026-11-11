@@ -14,7 +14,7 @@
     button,select { font:inherit; border:1px solid var(--line); background:var(--panel); color:var(--ink); min-height:44px; padding:9px 13px; border-radius:9px; cursor:pointer; } button:hover,button:focus { border-color:var(--forest); } button.active { background:var(--forest); color:#fff; border-color:var(--forest); } select { cursor:pointer; } .control-label { display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-size:.86rem; font-weight:700; }
     .card { background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:clamp(22px,4vw,42px); box-shadow:0 8px 26px rgba(22,34,31,.05); }.prompt { color:var(--muted); font-weight:650; margin:0 0 12px; }.symbol { font-family:"Doulos SIL","Charis SIL","Arial Unicode MS",sans-serif; font-size:clamp(4.5rem,13vw,8rem); line-height:1; margin:4px 0 32px; }.description { font-family:Georgia,serif; font-size:clamp(1.6rem,4vw,2.4rem); line-height:1.15; margin:4px 0 32px; max-width:700px; }
     .answers { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }.answer { text-align:left; min-height:70px; line-height:1.25; }.answer.correct { background:var(--mist); border-color:var(--forest); }.answer.incorrect { background:#f7e8e4; border-color:var(--bad); }.feedback { min-height:28px; margin:20px 0 0; color:var(--muted); }.feedback.good { color:var(--forest); font-weight:700; }.feedback.bad { color:var(--bad); font-weight:700; }.next { margin-top:16px; background:var(--ink); color:#fff; border-color:var(--ink); }
-    .study { margin-top:22px; border:1px solid var(--line); border-radius:14px; padding:20px 22px; background:var(--mist); }.study-head { display:flex; justify-content:space-between; align-items:baseline; gap:16px; }.study h2 { font-size:1.45rem; }.study button { min-height:34px; padding:5px 9px; font-size:.85rem; }.study p { color:var(--muted); margin:0 0 8px; }.study ul { margin:7px 0 0; padding-left:20px; }.study li { margin:3px 0; }
+    .study { margin-top:22px; border:1px solid var(--line); border-radius:14px; padding:20px 22px; background:var(--mist); }.study-head { display:flex; justify-content:space-between; align-items:baseline; gap:16px; }.study h2 { font-size:1.45rem; }.study h3 { color:var(--muted); font-size:.86rem; letter-spacing:.08em; text-transform:uppercase; margin:16px 0 4px; }.study button { min-height:34px; padding:5px 9px; font-size:.85rem; }.study p { color:var(--muted); margin:0 0 8px; }.study ul { margin:7px 0 0; padding-left:20px; }.study li { margin:3px 0; }
     .inventory { margin-top:38px; }.inventory summary { cursor:pointer; color:var(--forest); font-weight:700; }.inventory-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:10px; padding-top:18px; }.entry { border-top:1px solid var(--line); padding:9px 0; color:var(--muted); }.entry b { font-family:"Doulos SIL","Arial Unicode MS",sans-serif; color:var(--ink); font-size:1.35rem; margin-right:8px; }.note { color:var(--muted); font-size:.9rem; margin:24px 0 0; }
     @media (max-width:620px) { main { width:min(100% - 24px,960px); padding-top:30px; } header { grid-template-columns:1fr; } .badge { justify-self:start; }.answers { grid-template-columns:1fr; } }
   </style>
@@ -41,7 +41,7 @@
     <aside class="study" aria-live="polite">
       <div class="study-head"><h2>Features to study</h2><button id="reset-progress">Clear report</button></div>
       <p id="score">No answers yet.</p>
-      <div id="focus">Answer questions to see which articulatory features deserve review.</div>
+      <div id="focus"></div>
     </aside>
     <details class="inventory"><summary>Review the current inventory for this level</summary><div id="inventory" class="inventory-grid"></div></details>
     <p class="note">The inventory is stored in <code>dist/data/inventory.json</code>. Course terminology and accepted alternatives are designed to be edited there.</p>
@@ -50,7 +50,7 @@
     let inventory, state = { level:'easy', mode:'symbol', difficulty:'easy', item:null, answered:false };
     const $ = id => document.getElementById(id);
     const shuffle = a => [...a].sort(() => Math.random() - .5);
-    const progressKey='ipa-practice-lab-progress-v1';
+    const progressKey='ipa-practice-lab-progress-v2';
     let progress = (()=>{ try { return {...{attempted:0,correct:0,misses:{}},...JSON.parse(localStorage.getItem(progressKey))}; } catch { return {attempted:0,correct:0,misses:{}}; } })();
     function currentItems(){ return inventory.levels[state.level].items; }
     function renderInventory(){ $('inventory').innerHTML = currentItems().map(x => `<div class="entry"><b>${x.symbol}</b>${x.canonical}</div>`).join(''); }
@@ -63,15 +63,15 @@
     function featureValue(text, set){ return [...set].sort((a,b)=>b.length-a.length).find(value=>text.includes(value)); }
     function featureDifferences(item, selected){
       const sets=item.kind==='vowel' ? vowelFeatures : consonantFeatures;
-      return Object.entries(sets).filter(([,values])=>{ const expected=featureValue(item.canonical,values), chosen=featureValue(selected,values); return expected && chosen && expected!==chosen; }).map(([feature])=>feature);
+      return Object.entries(sets).map(([feature,values])=>({feature,expected:featureValue(item.canonical,values),chosen:featureValue(selected,values)})).filter(({expected,chosen})=>expected && chosen && expected!==chosen);
     }
     function renderStudy(){
       $('score').textContent=progress.attempted ? `${progress.correct} of ${progress.attempted} correct` : 'No answers yet.';
-      const misses=Object.entries(progress.misses).sort((a,b)=>b[1]-a[1]);
-      $('focus').innerHTML=misses.length ? `<p>Focus your review on:</p><ul>${misses.map(([feature,count])=>`<li><strong>${feature}</strong> — missed ${count} ${count===1?'time':'times'}</li>`).join('')}</ul>` : 'Answer questions to see which articulatory features deserve review.';
+      const groups=Object.entries(progress.misses).map(([feature,values])=>[feature,Object.entries(values).sort((a,b)=>b[1]-a[1])]).filter(([,values])=>values.length).sort((a,b)=>b[1].reduce((n,[,count])=>n+count,0)-a[1].reduce((n,[,count])=>n+count,0));
+      $('focus').innerHTML=groups.length ? `<p>Focus your review on:</p>${groups.map(([feature,values])=>`<section><h3>${feature}</h3><ul>${values.map(([value,count])=>`<li><strong>${value}</strong> — missed ${count} ${count===1?'time':'times'}</li>`).join('')}</ul></section>`).join('')}` : '';
     }
     function recordAnswer(correct, differences){
-      progress.attempted++; if(correct) progress.correct++; else differences.forEach(feature=>progress.misses[feature]=(progress.misses[feature]||0)+1);
+      progress.attempted++; if(correct) progress.correct++; else differences.forEach(({feature,expected})=>{ progress.misses[feature]??={}; progress.misses[feature][expected]=(progress.misses[feature][expected]||0)+1; });
       localStorage.setItem(progressKey,JSON.stringify(progress)); renderStudy();
     }
     function mutate(text, feature, sets){
@@ -112,7 +112,7 @@
     function answer(button){
       if(state.answered) return; state.answered=true; const correct=button.dataset.correct==='true'; const differences=correct ? [] : featureDifferences(state.item,button.dataset.description);
       document.querySelectorAll('.answer').forEach(b=>{ if(b.dataset.correct==='true') b.classList.add('correct'); });
-      if(correct){ $('feedback').textContent='Correct.'; $('feedback').className='feedback good'; } else { button.classList.add('incorrect'); const focus=differences.length ? ` Focus on: ${differences.join(', ')}.` : ''; $('feedback').textContent=`The answer is ${state.item.symbol} — ${state.item.canonical}.${focus}`; $('feedback').className='feedback bad'; }
+      if(correct){ $('feedback').textContent='Correct.'; $('feedback').className='feedback good'; } else { button.classList.add('incorrect'); const focus=differences.length ? ` Focus on: ${differences.map(({expected})=>expected).join(', ')}.` : ''; $('feedback').textContent=`The answer is ${state.item.symbol} — ${state.item.canonical}.${focus}`; $('feedback').className='feedback bad'; }
       recordAnswer(correct,differences);
       $('next').hidden=false;
     }
