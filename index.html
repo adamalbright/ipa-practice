@@ -14,8 +14,8 @@
     button,select { font:inherit; border:1px solid var(--line); background:var(--panel); color:var(--ink); min-height:44px; padding:9px 13px; border-radius:9px; cursor:pointer; } button:hover,button:focus { border-color:var(--forest); } button.active { background:var(--forest); color:#fff; border-color:var(--forest); } select { cursor:pointer; } .control-label { display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-size:.86rem; font-weight:700; }
     .card { background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:clamp(22px,4vw,42px); box-shadow:0 8px 26px rgba(22,34,31,.05); }.prompt { color:var(--muted); font-weight:650; margin:0 0 12px; }.symbol { font-family:"Doulos SIL","Charis SIL","Arial Unicode MS",sans-serif; font-size:clamp(4.5rem,13vw,8rem); line-height:1; margin:4px 0 32px; }.description { font-family:Georgia,serif; font-size:clamp(1.6rem,4vw,2.4rem); line-height:1.15; margin:4px 0 32px; max-width:700px; }
     .answers { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }.answer { text-align:left; min-height:70px; line-height:1.25; }.answer.correct { background:var(--mist); border-color:var(--forest); }.answer.incorrect { background:#f7e8e4; border-color:var(--bad); }.feedback { min-height:28px; margin:20px 0 0; color:var(--muted); }.feedback.good { color:var(--forest); font-weight:700; }.feedback.bad { color:var(--bad); font-weight:700; }.next { margin-top:16px; background:var(--ink); color:#fff; border-color:var(--ink); }
-    .study { margin-top:22px; border:1px solid var(--line); border-radius:14px; padding:20px 22px; background:var(--mist); }.study-head { display:flex; justify-content:space-between; align-items:baseline; gap:16px; }.study h2 { font-size:1.45rem; }.study h3 { color:var(--muted); font-size:.86rem; letter-spacing:.08em; text-transform:uppercase; margin:16px 0 4px; }.study button { min-height:34px; padding:5px 9px; font-size:.85rem; }.study p { color:var(--muted); margin:0 0 8px; }.study ul { margin:7px 0 0; padding-left:20px; }.study li { margin:3px 0; }
-    .inventory { margin-top:38px; }.inventory summary { cursor:pointer; color:var(--forest); font-weight:700; }.inventory-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:10px; padding-top:18px; }.entry { border-top:1px solid var(--line); padding:9px 0; color:var(--muted); }.entry b { font-family:"Doulos SIL","Arial Unicode MS",sans-serif; color:var(--ink); font-size:1.35rem; margin-right:8px; }.note { color:var(--muted); font-size:.9rem; margin:24px 0 0; }
+    .study { margin-top:22px; border:1px solid var(--line); border-radius:14px; padding:20px 22px; background:var(--mist); }.study h2 { font-size:1.45rem; }.study h3 { color:var(--muted); font-size:.86rem; letter-spacing:.08em; text-transform:uppercase; margin:16px 0 4px; }.study button { min-height:34px; padding:5px 9px; font-size:.85rem; }.study p { color:var(--muted); margin:0 0 8px; }.study ul { margin:7px 0 0; padding-left:20px; }.study li { margin:3px 0; }.summary { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin-bottom:22px; }.summary-head { display:flex; justify-content:space-between; align-items:baseline; gap:16px; }.summary-score { color:var(--ink)!important; font-weight:750; margin:0!important; }.progress-track { height:8px; background:#d7ddd4; border-radius:999px; overflow:hidden; margin-top:10px; }.progress-fill { width:0%; height:100%; background:var(--forest); border-radius:inherit; transition:width .25s ease; }.study-separator { border:0; border-top:1px solid var(--line); margin:22px 0 18px; }.symbols-instruction { font-size:.9rem; }.missed-wrap { margin-top:6px; overflow-x:auto; }.missed-table { border-collapse:separate; border-spacing:2px; min-width:0; width:auto; }.missed-table td { width:42px; height:36px; padding:0; text-align:center; vertical-align:middle; border-radius:6px; }.missed-symbol { font-family:"Doulos SIL","Charis SIL","Arial Unicode MS",sans-serif; font-size:1.25rem; color:var(--forest); background:transparent; border:0; min-height:30px; min-width:30px; padding:1px; }.missed-symbol:hover,.missed-symbol:focus { background:#fff; }.missed-static { color:var(--ink); }.audio-credit { margin-top:9px!important; font-size:.78rem; }.audio-credit a { color:var(--forest); }.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    .inventory { margin-top:38px; }.inventory summary { cursor:pointer; color:var(--forest); font-weight:700; }.inventory-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:10px; padding-top:18px; }.entry { border-top:1px solid var(--line); padding:9px 0; color:var(--muted); }.entry b { font-family:"Doulos SIL","Arial Unicode MS",sans-serif; color:var(--ink); font-size:1.35rem; margin-right:8px; }.attribution { color:var(--muted); font-size:.85rem; margin:24px 0 0; }.attribution a { color:var(--forest); }
     @media (max-width:620px) { main { width:min(100% - 24px,960px); padding-top:30px; } header { grid-template-columns:1fr; } .badge { justify-self:start; }.answers { grid-template-columns:1fr; } }
   </style>
 </head>
@@ -39,18 +39,20 @@
       <button id="next" class="next" hidden>Next question</button>
     </section>
     <aside class="study" aria-live="polite">
-      <div class="study-head"><h2>Features to study</h2><button id="reset-progress">Clear report</button></div>
-      <p id="score">No answers yet.</p>
+      <section class="summary"><div class="summary-head"><p id="score" class="summary-score">No answers yet.</p><button id="reset-progress">Clear report</button></div><div class="progress-track" id="progress-track" role="progressbar" aria-label="Percent correct" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-fill" id="progress-fill"></div></div></section>
+      <h2>Features to study</h2>
       <div id="focus"></div>
+      <div id="missed-symbols"></div>
     </aside>
     <details class="inventory"><summary>Review the current inventory for this level</summary><div id="inventory" class="inventory-grid"></div></details>
+    <p class="attribution">Source of sound files: <a href="https://www.internationalphoneticassociation.org/IPAcharts/IPA_charts_EI/IPA_charts_EI.html" target="_blank" rel="noopener">International Phonetics Association Interactive IPA Chart</a>. (See chart for additional review)</p>
   </main>
   <script>
     let inventory, state = { level:'easy', mode:'description', difficulty:'easy', item:null, answered:false };
     const $ = id => document.getElementById(id);
     const shuffle = a => [...a].sort(() => Math.random() - .5);
-    const progressKey='ipa-practice-lab-progress-v2';
-    let progress = (()=>{ try { return {...{attempted:0,correct:0,misses:{}},...JSON.parse(localStorage.getItem(progressKey))}; } catch { return {attempted:0,correct:0,misses:{}}; } })();
+    const progressKey='ipa-practice-lab-progress-v3';
+    let progress = (()=>{ try { const saved=JSON.parse(localStorage.getItem(progressKey)||localStorage.getItem('ipa-practice-lab-progress-v2')||'{}'); return {...{attempted:0,correct:0,misses:{},missedSymbols:{}},...saved,missedSymbols:saved.missedSymbols||{}}; } catch { return {attempted:0,correct:0,misses:{},missedSymbols:{}}; } })();
     function currentItems(){ return inventory.levels[state.level].items; }
     function renderInventory(){ $('inventory').innerHTML = currentItems().map(x => `<div class="entry"><b>${x.symbol}</b>${x.canonical}</div>`).join(''); }
     const consonantFeatures = {
@@ -71,6 +73,38 @@
       Object.values(sets).forEach(values=>{ const a=featureValue(item.canonical,values), b=featureValue(candidate.canonical,values); if(a&&b){ compared++; if(a!==b) differences++; } });
       return compared ? differences : Infinity;
     }
+    const reviewPlaces=['bilabial','labiodental','dental','alveolar','postalveolar','retroflex','palatal','velar','uvular','pharyngeal','glottal'];
+    const reviewManners=['stop','nasal','affricate','fricative','liquid','glide','other'];
+    function reviewPlace(item){
+      const text=item.canonical;
+      if(text.includes('labiovelar')||text.includes('labial-velar')) return 'velar';
+      if(text.includes('labial-palatal')||text.includes('alveolo-palatal')||text.includes('palatoalveolar')) return 'palatal';
+      if(text.includes('epiglottal')) return 'pharyngeal';
+      return reviewPlaces.find(place=>text.includes(place))||null;
+    }
+    function reviewManner(item){
+      const text=item.canonical;
+      if(text.includes('affricate')) return 'affricate';
+      if(text.includes('nasal')) return 'nasal';
+      if(text.includes('fricative')) return 'fricative';
+      if(text.includes('stop')||text.includes('implosive')||text.includes('ejective')) return 'stop';
+      if(text.includes('glide')) return 'glide';
+      if(text.includes('lateral')||text.includes('rhotic')||text.includes('tap')||text.includes('flap')||text.includes('trill')) return 'liquid';
+      return 'other';
+    }
+    function audioCode(symbol){
+      const special={g:'0261'}; if(special[symbol]) return special[symbol];
+      return [...symbol].length===1 ? symbol.codePointAt(0).toString(16).toUpperCase().padStart(4,'0') : null;
+    }
+    function renderMissedSymbols(){
+      const allItems=Object.values(inventory.levels).flatMap(level=>level.items);
+      const missed=Object.entries(progress.missedSymbols).map(([symbol,count])=>({item:allItems.find(item=>item.symbol===symbol),count})).filter(({item})=>item&&reviewPlace(item)&&reviewManner(item));
+      if(!missed.length){ $('missed-symbols').innerHTML=''; return; }
+      const cell=(manner,place)=>missed.filter(({item})=>reviewManner(item)===manner&&reviewPlace(item)===place).map(({item,count})=>{ const code=audioCode(item.symbol), title=`${item.symbol} — missed ${count} ${count===1?'time':'times'}`; return code ? `<button class="missed-symbol" data-audio="https://www.internationalphoneticassociation.org/IPAcharts/common_files/sounds/JH/${code}.mp3" title="${title}; play J. House recording" aria-label="${title}; play J. House recording">${item.symbol}</button>` : `<span class="missed-symbol missed-static" title="${title}">${item.symbol}</span>`; }).join('');
+      const activeManners=reviewManners.filter(manner=>missed.some(({item})=>reviewManner(item)===manner));
+      const activePlaces=reviewPlaces.filter(place=>missed.some(({item})=>reviewPlace(item)===place));
+      $('missed-symbols').innerHTML=`<hr class="study-separator"><h2>Symbols to study</h2><p class="symbols-instruction">Click on a symbol to hear it pronounced</p><div class="missed-wrap"><table class="missed-table"><caption class="sr-only">Missed symbols, arranged by manner of articulation and IPA place of articulation</caption><tbody>${activeManners.map(manner=>`<tr><th scope="row" class="sr-only">${manner}</th>${activePlaces.map(place=>`<td aria-label="${manner}, ${place}">${cell(manner,place)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+    }
     function descriptionChoices(items,item){
       const scored=items.filter(candidate=>candidate.symbol!==item.symbol).map(candidate=>({candidate,distance:featureDistance(item,candidate)}));
       const finite=scored.filter(({distance})=>Number.isFinite(distance)); const pool=finite.length>=3 ? finite : scored;
@@ -81,12 +115,16 @@
       return shuffle([{label:item.symbol,correct:true},...foils.map(({candidate})=>({label:candidate.symbol,correct:false}))]);
     }
     function renderStudy(){
-      $('score').textContent=progress.attempted ? `${progress.correct} of ${progress.attempted} correct` : 'No answers yet.';
+      const percent=progress.attempted ? Math.round((progress.correct/progress.attempted)*100) : 0;
+      $('score').textContent=progress.attempted ? `${progress.correct} of ${progress.attempted} correct (${percent}%)` : 'No answers yet.';
+      $('progress-fill').style.width=`${percent}%`; $('progress-track').setAttribute('aria-valuenow',percent);
       const groups=Object.entries(progress.misses).map(([feature,values])=>[feature,Object.entries(values).sort((a,b)=>b[1]-a[1])]).filter(([,values])=>values.length).sort((a,b)=>b[1].reduce((n,[,count])=>n+count,0)-a[1].reduce((n,[,count])=>n+count,0));
       $('focus').innerHTML=groups.length ? `<p>Focus your review on:</p>${groups.map(([feature,values])=>`<section><h3>${feature}</h3><ul>${values.map(([value,count])=>`<li><strong>${value}</strong> — missed ${count} ${count===1?'time':'times'}</li>`).join('')}</ul></section>`).join('')}` : '';
+      if(inventory) renderMissedSymbols();
     }
     function recordAnswer(correct, differences){
       progress.attempted++; if(correct) progress.correct++; else differences.forEach(({feature,expected})=>{ progress.misses[feature]??={}; progress.misses[feature][expected]=(progress.misses[feature][expected]||0)+1; });
+      if(!correct&&state.mode==='description') progress.missedSymbols[state.item.symbol]=(progress.missedSymbols[state.item.symbol]||0)+1;
       localStorage.setItem(progressKey,JSON.stringify(progress)); renderStudy();
     }
     function mutate(text, feature, sets){
@@ -133,7 +171,7 @@
     }
     function selectMode(mode){ state.mode=mode; document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode)); newQuestion(); }
     fetch('data/inventory.json').then(r=>r.json()).then(data=>{ inventory=data; renderInventory(); renderStudy(); newQuestion(); });
-    $('level').addEventListener('change',e=>{state.level=e.target.value; renderInventory(); newQuestion();}); $('difficulty').addEventListener('change',e=>{state.difficulty=e.target.value; newQuestion();}); $('new').addEventListener('click',newQuestion); $('next').addEventListener('click',newQuestion); $('reset-progress').addEventListener('click',()=>{ progress={attempted:0,correct:0,misses:{}}; localStorage.removeItem(progressKey); renderStudy(); }); document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>selectMode(b.dataset.mode)));
+    $('level').addEventListener('change',e=>{state.level=e.target.value; renderInventory(); newQuestion();}); $('difficulty').addEventListener('change',e=>{state.difficulty=e.target.value; newQuestion();}); $('new').addEventListener('click',newQuestion); $('next').addEventListener('click',newQuestion); $('reset-progress').addEventListener('click',()=>{ progress={attempted:0,correct:0,misses:{},missedSymbols:{}}; localStorage.removeItem(progressKey); localStorage.removeItem('ipa-practice-lab-progress-v2'); renderStudy(); }); $('missed-symbols').addEventListener('click',event=>{ const url=event.target.dataset.audio; if(url) new Audio(url).play().catch(()=>{}); }); document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>selectMode(b.dataset.mode)));
   </script>
 </body>
 </html>
