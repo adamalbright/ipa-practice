@@ -10,7 +10,7 @@
     * { box-sizing:border-box; } body { margin:0; color:var(--ink); background:var(--paper); font:16px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; }
     main { width:min(960px,calc(100% - 32px)); margin:0 auto; padding:52px 0 72px; } header { display:grid; grid-template-columns:1fr auto; gap:24px; align-items:end; border-bottom:1px solid var(--line); padding-bottom:28px; }
     h1 { margin:0; font-family:Georgia,serif; font-size:clamp(2.1rem,6vw,4.5rem); line-height:.94; letter-spacing:-.05em; } h2 { font-family:Georgia,serif; margin:0 0 12px; } .eyebrow { color:var(--forest); font-size:.77rem; font-weight:750; letter-spacing:.12em; text-transform:uppercase; margin:0 0 12px; }.lede { max-width:630px; color:var(--muted); margin:22px 0 0; }
-    .badge { padding:8px 12px; background:var(--sun); border-radius:100px; font-size:.8rem; font-weight:700; white-space:nowrap; } .controls { display:flex; flex-wrap:wrap; gap:10px; margin:30px 0 18px; }
+    .controls { display:flex; flex-wrap:wrap; gap:10px; margin:30px 0 18px; }
     button,select { font:inherit; border:1px solid var(--line); background:var(--panel); color:var(--ink); min-height:44px; padding:9px 13px; border-radius:9px; cursor:pointer; } button:hover,button:focus { border-color:var(--forest); } button.active { background:var(--forest); color:#fff; border-color:var(--forest); } select { cursor:pointer; } .control-label { display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-size:.86rem; font-weight:700; }
     .card { background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:clamp(22px,4vw,42px); box-shadow:0 8px 26px rgba(22,34,31,.05); }.prompt { color:var(--muted); font-weight:650; margin:0 0 12px; }.symbol { font-family:"Doulos SIL","Charis SIL","Arial Unicode MS",sans-serif; font-size:clamp(4.5rem,13vw,8rem); line-height:1; margin:4px 0 32px; }.description { font-family:Georgia,serif; font-size:clamp(1.6rem,4vw,2.4rem); line-height:1.15; margin:4px 0 32px; max-width:700px; }
     .answers { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }.answer { text-align:left; min-height:70px; line-height:1.25; }.answer.correct { background:var(--mist); border-color:var(--forest); }.answer.incorrect { background:#f7e8e4; border-color:var(--bad); }.feedback { min-height:28px; margin:20px 0 0; color:var(--muted); }.feedback.good { color:var(--forest); font-weight:700; }.feedback.bad { color:var(--bad); font-weight:700; }.next { margin-top:16px; background:var(--ink); color:#fff; border-color:var(--ink); }
@@ -22,7 +22,6 @@
   <main>
     <header>
       <div><h1>IPA Practice Lab</h1></div>
-      <span class="badge" id="count">Loading inventory</span>
     </header>
     <section class="controls" aria-label="Practice settings">
       <label class="control-label">Symbol set <select id="level" aria-label="Symbol set"><option value="easy">Basic</option><option value="medium">Intermediate</option><option value="hard">Advanced</option></select></label>
@@ -95,7 +94,7 @@
       $('next').hidden=false;
     }
     function selectMode(mode){ state.mode=mode; $('difficulty-control').hidden=mode!=='symbol'; document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode)); newQuestion(); }
-    fetch('data/inventory.json').then(r=>r.json()).then(data=>{ inventory=data; $('count').textContent=`${Object.values(data.levels).reduce((n,l)=>n+l.items.length,0)} items in draft`; renderInventory(); newQuestion(); });
+    fetch('data/inventory.json').then(r=>r.json()).then(data=>{ inventory=data; renderInventory(); newQuestion(); });
     $('level').addEventListener('change',e=>{state.level=e.target.value; renderInventory(); newQuestion();}); $('difficulty').addEventListener('change',e=>{state.difficulty=e.target.value; newQuestion();}); $('new').addEventListener('click',newQuestion); $('next').addEventListener('click',newQuestion); document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>selectMode(b.dataset.mode)));
   </script>
 </body>
