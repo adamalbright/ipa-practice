@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practice articulatory descriptions and IPA symbols.">
+  <title>IPA Practice Lab</title>
+  <style>
+    :root { --ink:#16221f; --muted:#566862; --paper:#f7f4ec; --panel:#fffdf8; --line:#d7ddd4; --forest:#1f5b48; --sun:#f3c95c; --mist:#e3eee7; --bad:#8c3428; }
+    * { box-sizing:border-box; } body { margin:0; color:var(--ink); background:var(--paper); font:16px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; }
+    main { width:min(960px,calc(100% - 32px)); margin:0 auto; padding:52px 0 72px; } header { display:grid; grid-template-columns:1fr auto; gap:24px; align-items:end; border-bottom:1px solid var(--line); padding-bottom:28px; }
+    h1 { margin:0; font-family:Georgia,serif; font-size:clamp(2.1rem,6vw,4.5rem); line-height:.94; letter-spacing:-.05em; } h2 { font-family:Georgia,serif; margin:0 0 12px; } .eyebrow { color:var(--forest); font-size:.77rem; font-weight:750; letter-spacing:.12em; text-transform:uppercase; margin:0 0 12px; }.lede { max-width:630px; color:var(--muted); margin:22px 0 0; }
+    .badge { padding:8px 12px; background:var(--sun); border-radius:100px; font-size:.8rem; font-weight:700; white-space:nowrap; } .controls { display:flex; flex-wrap:wrap; gap:10px; margin:30px 0 18px; }
+    button,select { font:inherit; border:1px solid var(--line); background:var(--panel); color:var(--ink); min-height:44px; padding:9px 13px; border-radius:9px; cursor:pointer; } button:hover,button:focus { border-color:var(--forest); } button.active { background:var(--forest); color:#fff; border-color:var(--forest); } select { cursor:pointer; } .control-label { display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-size:.86rem; font-weight:700; }
+    .card { background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:clamp(22px,4vw,42px); box-shadow:0 8px 26px rgba(22,34,31,.05); }.prompt { color:var(--muted); font-weight:650; margin:0 0 12px; }.symbol { font-family:"Doulos SIL","Charis SIL","Arial Unicode MS",sans-serif; font-size:clamp(4.5rem,13vw,8rem); line-height:1; margin:4px 0 32px; }.description { font-family:Georgia,serif; font-size:clamp(1.6rem,4vw,2.4rem); line-height:1.15; margin:4px 0 32px; max-width:700px; }
+    .answers { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }.answer { text-align:left; min-height:70px; line-height:1.25; }.answer.correct { background:var(--mist); border-color:var(--forest); }.answer.incorrect { background:#f7e8e4; border-color:var(--bad); }.feedback { min-height:28px; margin:20px 0 0; color:var(--muted); }.feedback.good { color:var(--forest); font-weight:700; }.feedback.bad { color:var(--bad); font-weight:700; }.next { margin-top:16px; background:var(--ink); color:#fff; border-color:var(--ink); }
+    .inventory { margin-top:38px; }.inventory summary { cursor:pointer; color:var(--forest); font-weight:700; }.inventory-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:10px; padding-top:18px; }.entry { border-top:1px solid var(--line); padding:9px 0; color:var(--muted); }.entry b { font-family:"Doulos SIL","Arial Unicode MS",sans-serif; color:var(--ink); font-size:1.35rem; margin-right:8px; }.note { color:var(--muted); font-size:.9rem; margin:24px 0 0; }
+    @media (max-width:620px) { main { width:min(100% - 24px,960px); padding-top:30px; } header { grid-template-columns:1fr; } .badge { justify-self:start; }.answers { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div><h1>IPA Practice Lab</h1></div>
+      <span class="badge" id="count">Loading inventory</span>
+    </header>
+    <section class="controls" aria-label="Practice settings">
+      <label class="control-label">Symbol set <select id="level" aria-label="Symbol set"><option value="easy">Basic</option><option value="medium">Intermediate</option><option value="hard">Advanced</option></select></label>
+      <button class="active" data-mode="symbol">Symbol → description</button>
+      <button data-mode="description">Description → symbol</button>
+      <label class="control-label" id="difficulty-control">Difficulty <select id="difficulty" aria-label="Difficulty"><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option></select></label>
+      <button id="new" title="New question">New question</button>
+    </section>
+    <section class="card" aria-live="polite">
+      <p class="prompt" id="prompt"></p>
+      <div id="question"></div>
+      <div id="answers" class="answers"></div>
+      <p id="feedback" class="feedback"></p>
+      <button id="next" class="next" hidden>Next question</button>
+    </section>
+    <details class="inventory"><summary>Review the current inventory for this level</summary><div id="inventory" class="inventory-grid"></div></details>
+    <p class="note">The inventory is stored in <code>dist/data/inventory.json</code>. Course terminology and accepted alternatives are designed to be edited there.</p>
+  </main>
+  <script>
+    let inventory, state = { level:'easy', mode:'symbol', difficulty:'easy', item:null, answered:false };
+    const $ = id => document.getElementById(id);
+    const shuffle = a => [...a].sort(() => Math.random() - .5);
+    function currentItems(){ return inventory.levels[state.level].items; }
+    function renderInventory(){ $('inventory').innerHTML = currentItems().map(x => `<div class="entry"><b>${x.symbol}</b>${x.canonical}</div>`).join(''); }
+    const consonantFeatures = {
+      voicing:['voiceless','voiced'],
+      place:['bilabial','labiodental','dental','alveolar','postalveolar','retroflex','palatal','velar','uvular','pharyngeal','glottal'],
+      manner:['lateral affricate','lateral fricative','lateral approximant','affricate','fricative','nasal','trill','tap','flap','stop','rhotic','lateral','glide','approximant']
+    };
+    const vowelFeatures = { height:['high','mid','low'], backness:['front','central','back'], rounding:['unrounded','rounded'], tenseness:['tense','lax'] };
+    function featureValue(text, set){ return [...set].sort((a,b)=>b.length-a.length).find(value=>text.includes(value)); }
+    function mutate(text, feature, sets){
+      const from=featureValue(text,sets[feature]); if(!from) return null;
+      const alternatives=sets[feature].filter(value=>value!==from);
+      const to=alternatives[Math.floor(Math.random()*alternatives.length)];
+      return text.replace(from,to);
+    }
+    function featureChoices(item){
+      const canonical=item.canonical; const sets=item.kind==='vowel' ? vowelFeatures : consonantFeatures;
+      const mutations=Object.keys(sets).map(feature=>mutate(canonical,feature,sets));
+      return mutations.every(Boolean) ? mutations : null;
+    }
+    function symbolChoices(items,item){
+      const standard=featureChoices(item);
+      if(state.difficulty==='hard' && standard) return shuffle([{label:item.canonical,correct:true},...standard.map(label=>({label,correct:false}))]);
+      if(state.difficulty==='medium' && standard){
+        const near=shuffle(standard).slice(0,2).map(label=>({label,correct:false}));
+        const pool=items.filter(x=>x.symbol!==item.symbol && !near.some(choice=>choice.label===x.canonical));
+        const far=pool[Math.floor(Math.random()*pool.length)];
+        return shuffle([{label:item.canonical,correct:true},...near,{label:far.canonical,correct:false}]);
+      }
+      const wrong=shuffle(items.filter(x=>x.symbol!==item.symbol)).slice(0,3);
+      return shuffle([{label:item.canonical,correct:true},...wrong.map(x=>({label:x.canonical,correct:false}))]);
+    }
+    function newQuestion(){
+      state.answered=false; const items=currentItems(); state.item=items[Math.floor(Math.random()*items.length)];
+      $('feedback').textContent=''; $('feedback').className='feedback'; $('next').hidden=true;
+      const symbolMode=state.mode==='symbol'; const choices=symbolMode ? symbolChoices(items,state.item) : shuffle([{label:state.item.symbol,correct:true},...shuffle(items.filter(x=>x.symbol!==state.item.symbol)).slice(0,3).map(x=>({label:x.symbol,correct:false}))]);
+      const fallback = symbolMode && state.difficulty!=='easy' && !featureChoices(state.item);
+      $('prompt').textContent=symbolMode ? 'Choose the best phonetic description.' : 'Choose the matching phonetic symbol.';
+      $('question').innerHTML=symbolMode ? `<div class="symbol">${state.item.symbol}</div>` : `<div class="description">${state.item.canonical}</div>`;
+      $('answers').innerHTML=choices.map(x=>`<button class="answer" data-correct="${x.correct}">${symbolMode ? x.label : `<span class="symbol" style="font-size:2.7rem;margin:0">${x.label}</span>`}</button>`).join('');
+      if(fallback) $('feedback').textContent='This special articulation currently uses standard distractors; feature-balanced hard distractors will be added with its reviewed terminology.';
+      document.querySelectorAll('.answer').forEach(b=>b.addEventListener('click',()=>answer(b)));
+    }
+    function answer(button){
+      if(state.answered) return; state.answered=true; const correct=button.dataset.correct==='true';
+      document.querySelectorAll('.answer').forEach(b=>{ if(b.dataset.correct==='true') b.classList.add('correct'); });
+      if(correct){ $('feedback').textContent='Correct.'; $('feedback').className='feedback good'; } else { button.classList.add('incorrect'); $('feedback').textContent=`The answer is ${state.item.symbol} — ${state.item.canonical}.`; $('feedback').className='feedback bad'; }
+      $('next').hidden=false;
+    }
+    function selectMode(mode){ state.mode=mode; $('difficulty-control').hidden=mode!=='symbol'; document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode)); newQuestion(); }
+    fetch('data/inventory.json').then(r=>r.json()).then(data=>{ inventory=data; $('count').textContent=`${Object.values(data.levels).reduce((n,l)=>n+l.items.length,0)} items in draft`; renderInventory(); newQuestion(); });
+    $('level').addEventListener('change',e=>{state.level=e.target.value; renderInventory(); newQuestion();}); $('difficulty').addEventListener('change',e=>{state.difficulty=e.target.value; newQuestion();}); $('new').addEventListener('click',newQuestion); $('next').addEventListener('click',newQuestion); document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>selectMode(b.dataset.mode)));
+  </script>
+</body>
+</html>

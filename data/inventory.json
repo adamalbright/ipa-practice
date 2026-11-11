@@ -1,0 +1,44 @@
+{
+  "title": "IPA Practice Lab inventory",
+  "variety": "General American English, with additional core IPA sounds for broader practice",
+  "rules": {
+    "vowelFeatures": ["height", "backness", "rounding", "tenseness"],
+    "consonantFeatures": ["voicing", "place", "manner"],
+    "note": "The canonical label is editable course terminology. Accepted labels may omit features explicitly marked optional."
+  },
+  "levels": {
+    "easy": {
+      "label": "Basic",
+      "description": "Core General American English segments",
+      "items": [
+        {"symbol":"p","kind":"consonant","canonical":"voiceless bilabial stop"},{"symbol":"b","kind":"consonant","canonical":"voiced bilabial stop"},{"symbol":"t","kind":"consonant","canonical":"voiceless alveolar stop"},{"symbol":"d","kind":"consonant","canonical":"voiced alveolar stop"},{"symbol":"k","kind":"consonant","canonical":"voiceless velar stop"},{"symbol":"g","kind":"consonant","canonical":"voiced velar stop"},{"symbol":"ʔ","kind":"consonant","canonical":"voiceless glottal stop"},
+        {"symbol":"m","kind":"consonant","canonical":"voiced bilabial nasal"},{"symbol":"n","kind":"consonant","canonical":"voiced alveolar nasal"},{"symbol":"ŋ","kind":"consonant","canonical":"voiced velar nasal"},{"symbol":"ɾ","kind":"consonant","canonical":"voiced alveolar flap/tap"},
+        {"symbol":"f","kind":"consonant","canonical":"voiceless labiodental fricative"},{"symbol":"v","kind":"consonant","canonical":"voiced labiodental fricative"},{"symbol":"θ","kind":"consonant","canonical":"voiceless dental fricative"},{"symbol":"ð","kind":"consonant","canonical":"voiced dental fricative"},{"symbol":"s","kind":"consonant","canonical":"voiceless alveolar fricative"},{"symbol":"z","kind":"consonant","canonical":"voiced alveolar fricative"},{"symbol":"ʃ","kind":"consonant","canonical":"voiceless postalveolar fricative"},{"symbol":"ʒ","kind":"consonant","canonical":"voiced postalveolar fricative"},{"symbol":"h","kind":"consonant","canonical":"voiceless glottal fricative"},
+        {"symbol":"tʃ","kind":"consonant","canonical":"voiceless postalveolar affricate"},{"symbol":"dʒ","kind":"consonant","canonical":"voiced postalveolar affricate"},{"symbol":"l","kind":"consonant","canonical":"voiced alveolar lateral"},{"symbol":"ɹ","kind":"consonant","canonical":"voiced alveolar rhotic"},{"symbol":"j","kind":"consonant","canonical":"voiced palatal glide"},{"symbol":"w","kind":"consonant","canonical":"voiced labiovelar glide"},
+        {"symbol":"i","kind":"vowel","canonical":"high front unrounded tense vowel"},{"symbol":"ɪ","kind":"vowel","canonical":"high front unrounded lax vowel"},{"symbol":"ɛ","kind":"vowel","canonical":"mid front unrounded lax vowel"},{"symbol":"æ","kind":"vowel","canonical":"low front unrounded lax vowel"},{"symbol":"ə","kind":"vowel","canonical":"mid central unrounded lax vowel","accepted":["mid central unrounded vowel"]},{"symbol":"ʌ","kind":"vowel","canonical":"mid back unrounded lax vowel","accepted":["mid back unrounded vowel"]},{"symbol":"ɑ","kind":"vowel","canonical":"low back unrounded tense vowel","accepted":["low back unrounded vowel"]},{"symbol":"ɔ","kind":"vowel","canonical":"mid back rounded lax vowel"},{"symbol":"ʊ","kind":"vowel","canonical":"high back rounded lax vowel"},{"symbol":"u","kind":"vowel","canonical":"high back rounded tense vowel"}
+      ]
+    },
+    "medium": {
+      "label": "Intermediate",
+      "description": "Selected additional IPA sounds and syllabic segments; expandable",
+      "items": [
+        {"symbol":"ɸ","kind":"consonant","canonical":"voiceless bilabial fricative"},{"symbol":"β","kind":"consonant","canonical":"voiced bilabial fricative"},{"symbol":"x","kind":"consonant","canonical":"voiceless velar fricative"},{"symbol":"ɣ","kind":"consonant","canonical":"voiced velar fricative"},{"symbol":"q","kind":"consonant","canonical":"voiceless uvular stop"},{"symbol":"c","kind":"consonant","canonical":"voiceless palatal stop"},{"symbol":"ɦ","kind":"consonant","canonical":"voiced glottal fricative"},{"symbol":"ç","kind":"consonant","canonical":"voiceless palatal fricative"},{"symbol":"ɬ","kind":"consonant","canonical":"voiceless alveolar lateral fricative"},{"symbol":"r","kind":"consonant","canonical":"voiced alveolar trill"},{"symbol":"ʂ","kind":"consonant","canonical":"voiceless retroflex fricative"},{"symbol":"ʐ","kind":"consonant","canonical":"voiced retroflex fricative"},{"symbol":"χ","kind":"consonant","canonical":"voiceless uvular fricative"},{"symbol":"ʁ","kind":"consonant","canonical":"voiced uvular fricative"},
+        {"symbol":"y","kind":"vowel","canonical":"high front rounded tense vowel"},{"symbol":"ɨ","kind":"vowel","canonical":"high central unrounded tense vowel"},{"symbol":"ɯ","kind":"vowel","canonical":"high back unrounded tense vowel"},{"symbol":"ø","kind":"vowel","canonical":"mid front rounded tense vowel"},
+        {"symbol":"l̩","kind":"consonant","canonical":"voiced alveolar syllabic lateral"},{"symbol":"ɹ̩","kind":"consonant","canonical":"voiced alveolar syllabic rhotic"},{"symbol":"n̩","kind":"consonant","canonical":"voiced alveolar syllabic nasal"},{"symbol":"m̩","kind":"consonant","canonical":"voiced bilabial syllabic nasal"}
+      ]
+    },
+    "hard": {
+      "label": "Advanced",
+      "description": "All remaining core IPA consonants, including non-pulmonic consonants",
+      "items": [
+        {"symbol":"ʈ","kind":"consonant","canonical":"voiceless retroflex stop"},{"symbol":"ɖ","kind":"consonant","canonical":"voiced retroflex stop"},{"symbol":"ɟ","kind":"consonant","canonical":"voiced palatal stop"},{"symbol":"ɢ","kind":"consonant","canonical":"voiced uvular stop"},
+        {"symbol":"ɱ","kind":"consonant","canonical":"voiced labiodental nasal"},{"symbol":"ɳ","kind":"consonant","canonical":"voiced retroflex nasal"},{"symbol":"ɲ","kind":"consonant","canonical":"voiced palatal nasal"},{"symbol":"ɴ","kind":"consonant","canonical":"voiced uvular nasal"},{"symbol":"ʙ","kind":"consonant","canonical":"voiced bilabial trill"},{"symbol":"ʀ","kind":"consonant","canonical":"voiced uvular trill"},{"symbol":"ⱱ","kind":"consonant","canonical":"voiced labiodental tap"},{"symbol":"ɽ","kind":"consonant","canonical":"voiced retroflex tap"},
+        {"symbol":"ʝ","kind":"consonant","canonical":"voiced palatal fricative"},{"symbol":"ħ","kind":"consonant","canonical":"voiceless pharyngeal fricative"},{"symbol":"ʕ","kind":"consonant","canonical":"voiced pharyngeal fricative"},{"symbol":"ɮ","kind":"consonant","canonical":"voiced alveolar lateral fricative"},
+        {"symbol":"ʋ","kind":"consonant","canonical":"voiced labiodental approximant"},{"symbol":"ɻ","kind":"consonant","canonical":"voiced retroflex approximant"},{"symbol":"ɰ","kind":"consonant","canonical":"voiced velar approximant"},{"symbol":"ɭ","kind":"consonant","canonical":"voiced retroflex lateral approximant"},{"symbol":"ʎ","kind":"consonant","canonical":"voiced palatal lateral approximant"},{"symbol":"ʟ","kind":"consonant","canonical":"voiced velar lateral approximant"},
+        {"symbol":"ʍ","kind":"consonant","canonical":"voiceless labial-velar fricative"},{"symbol":"ɥ","kind":"consonant","canonical":"voiced labial-palatal approximant"},{"symbol":"ʜ","kind":"consonant","canonical":"voiceless epiglottal fricative"},{"symbol":"ʢ","kind":"consonant","canonical":"voiced epiglottal fricative"},{"symbol":"ʡ","kind":"consonant","canonical":"epiglottal stop"},{"symbol":"ɕ","kind":"consonant","canonical":"voiceless alveolo-palatal fricative"},{"symbol":"ʑ","kind":"consonant","canonical":"voiced alveolo-palatal fricative"},{"symbol":"ɺ","kind":"consonant","canonical":"voiced alveolar lateral flap"},{"symbol":"ɧ","kind":"consonant","canonical":"simultaneous voiceless postalveolar and velar fricative"},
+        {"symbol":"ʘ","kind":"consonant","canonical":"bilabial click"},{"symbol":"ǀ","kind":"consonant","canonical":"dental click"},{"symbol":"ǃ","kind":"consonant","canonical":"postalveolar click"},{"symbol":"ǂ","kind":"consonant","canonical":"palatoalveolar click"},{"symbol":"ǁ","kind":"consonant","canonical":"alveolar lateral click"},{"symbol":"ɓ","kind":"consonant","canonical":"voiced bilabial implosive"},{"symbol":"ɗ","kind":"consonant","canonical":"voiced dental or alveolar implosive"},{"symbol":"ʄ","kind":"consonant","canonical":"voiced palatal implosive"},{"symbol":"ɠ","kind":"consonant","canonical":"voiced velar implosive"},{"symbol":"ʛ","kind":"consonant","canonical":"voiced uvular implosive"},
+        {"symbol":"pʼ","kind":"consonant","canonical":"voiceless bilabial ejective stop"},{"symbol":"tʼ","kind":"consonant","canonical":"voiceless dental or alveolar ejective stop"},{"symbol":"kʼ","kind":"consonant","canonical":"voiceless velar ejective stop"},{"symbol":"sʼ","kind":"consonant","canonical":"voiceless alveolar ejective fricative"}
+      ]
+    }
+  }
+}
