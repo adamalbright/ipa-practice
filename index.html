@@ -26,9 +26,9 @@
     </header>
     <section class="controls" aria-label="Practice settings">
       <label class="control-label">Symbol set <select id="level" aria-label="Symbol set"><option value="easy">Basic</option><option value="medium">Intermediate</option><option value="hard">Advanced</option></select></label>
-      <button data-mode="description">Description → symbol</button>
-      <button class="active" data-mode="symbol">Symbol → description</button>
-      <label class="control-label" id="difficulty-control">Difficulty <select id="difficulty" aria-label="Difficulty"><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option></select></label>
+      <button class="active" data-mode="description">Description → symbol</button>
+      <button data-mode="symbol">Symbol → description</button>
+      <label class="control-label" id="difficulty-control" hidden>Difficulty <select id="difficulty" aria-label="Difficulty"><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option></select></label>
       <button id="new" title="New question">New question</button>
     </section>
     <section class="card" aria-live="polite">
@@ -47,7 +47,7 @@
     <p class="note">The inventory is stored in <code>dist/data/inventory.json</code>. Course terminology and accepted alternatives are designed to be edited there.</p>
   </main>
   <script>
-    let inventory, state = { level:'easy', mode:'symbol', difficulty:'easy', item:null, answered:false };
+    let inventory, state = { level:'easy', mode:'description', difficulty:'easy', item:null, answered:false };
     const $ = id => document.getElementById(id);
     const shuffle = a => [...a].sort(() => Math.random() - .5);
     const progressKey='ipa-practice-lab-progress-v2';
