@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>IPA Chart Labels: Consonants · IPA Practice Suite</title>
+  <style>
+    :root { --ink:#172622; --forest:#17634f; --paper:#f5f2ea; --panel:#fffdf8; --mist:#e5f0ea; --line:#d1dad1; --muted:#596c66; --bad:#963a2d; }
+    * { box-sizing:border-box; } body { margin:0; background:var(--paper); color:var(--ink); font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; } main { width:min(100% - 32px,1120px); margin:0 auto; padding:28px 0 60px; } a { color:var(--forest); } .back { display:inline-block; margin-bottom:26px; font-weight:700; text-decoration:none; } h1 { font-family:Georgia,serif; font-size:clamp(2rem,5vw,3.5rem); letter-spacing:-.035em; margin:0; } .intro { color:var(--muted); line-height:1.5; margin:10px 0 22px; }
+    .settings { display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin:0 0 20px; } .settings-group { display:flex; align-items:center; gap:8px; flex-wrap:wrap; } .settings strong { margin-right:2px; } .settings select { min-height:42px; padding:8px 12px; border:1px solid var(--line); border-radius:9px; color:var(--ink); background:var(--panel); font:inherit; } button { font:inherit; color:var(--ink); background:var(--panel); border:1px solid var(--line); border-radius:9px; min-height:42px; padding:8px 13px; cursor:pointer; } button:hover,button:focus { border-color:var(--forest); } button.active { color:#fff; background:var(--forest); border-color:var(--forest); }
+    .card { border:1px solid var(--line); border-radius:17px; background:var(--panel); padding:clamp(16px,3vw,30px); box-shadow:0 8px 25px rgba(23,38,34,.04); } .instruction { margin:0 0 14px; font-weight:700; } .chart-wrap { overflow-x:auto; padding-bottom:6px; } table { border-collapse:separate; border-spacing:3px; width:100%; min-width:900px; table-layout:fixed; } th,td { border:1px solid var(--line); border-radius:6px; text-align:center; padding:7px 3px; vertical-align:middle; } th { background:var(--paper); } thead th { color:var(--muted); font-size:.74rem; line-height:1.12; height:65px; font-weight:750; } th.row,.corner { width:85px; color:var(--muted); font-size:.75rem; line-height:1.1; } th.corner { background:var(--paper); } td { height:42px; background:#fff; font-family:"Doulos SIL","Charis SIL","Arial Unicode MS",sans-serif; font-size:1.25rem; } th.blank,.symbol-blank { background:#fff7d7; border:2px dashed #b58820; color:#80620e; padding:5px; } th.blank span,.symbol-blank { font-family:system-ui,sans-serif; font-size:.76rem; font-weight:800; letter-spacing:.03em; } .symbol-blank { display:inline-block; border-radius:5px; } th.blank.correct,.symbol-blank.correct { background:#e3f2e8; border-style:solid; border-color:var(--forest); color:var(--forest); } th.blank.near,.symbol-blank.near { background:#fff0d6; border-style:solid; border-color:#b76b12; color:#8a500b; } th.blank.incorrect,.symbol-blank.incorrect { background:#f7e8e4; border-style:solid; border-color:var(--bad); color:var(--bad); } .empty { color:#bbc4bd; }
+    .answer-area { margin-top:24px; padding:18px; background:var(--mist); border:1px solid var(--line); border-radius:12px; } .choice-bank { display:flex; gap:9px; flex-wrap:wrap; margin:10px 0 16px; } .chip { color:var(--forest); border-color:var(--forest); background:#fff; font-weight:750; } .chip:disabled { cursor:not-allowed; opacity:.42; } .assignments { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; } .answer-slot { min-height:62px; display:grid; align-content:center; gap:3px; text-align:left; border:2px dashed #9ab3a8; background:#fffdf8; color:var(--muted); font-weight:700; } .answer-slot.filled { border-style:solid; border-color:var(--forest); color:var(--forest); background:#fff; } .slot-name { font-size:.68rem; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); } .slot-value { font-size:1rem; } .slot-prompt { font-size:.84rem; } label { display:grid; gap:6px; color:var(--muted); font-size:.87rem; font-weight:750; } input { width:100%; min-height:43px; padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); font:inherit; } .correct-answer { color:var(--forest); font-size:.8rem; } .special-feedback { color:var(--bad); font-size:.8rem; font-weight:700; line-height:1.35; } .actions { margin-top:16px; display:flex; gap:10px; align-items:center; flex-wrap:wrap; } .check { color:#fff; background:var(--ink); border-color:var(--ink); } .feedback { font-weight:750; margin:0; } .good { color:var(--forest); } .bad { color:var(--bad); } .hint { color:var(--muted); font-size:.9rem; margin:0 0 12px; } .sr-only { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    @media (max-width:620px) { main { width:min(100% - 24px,1120px); padding-top:20px; } .assignments { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <a class="back" href="index.html">← All practice activities</a>
+    <h1>IPA chart labels: consonants</h1>
+    <p class="intro">Locate places and manners of articulation on the consonant chart. Each chart asks for either row labels or column labels; the number of blanks depends on the selected format and difficulty.</p>
+    <section class="settings" aria-label="Exercise settings"><div class="settings-group"><strong>Symbol set</strong><select id="symbol-set" aria-label="Symbol set"><option value="basic">Basic</option><option value="intermediate">Intermediate</option><option value="advanced">Advanced</option></select></div><div class="settings-group"><strong>Study focus</strong><button class="active" data-focus="column" aria-pressed="true">Place</button><button class="active" data-focus="row" aria-pressed="true">Manner</button><button class="active" data-focus="symbol" aria-pressed="true">Symbols</button></div><div class="settings-group"><strong>Format</strong><button class="active" data-format="choice">Multiple choice</button><button data-format="blank">Fill in the blank</button></div><div class="settings-group"><strong>Difficulty</strong><button class="active" data-difficulty="easy">Easy</button><button data-difficulty="medium">Medium</button><button data-difficulty="hard">Hard</button></div></section>
+    <section class="card" aria-live="polite">
+      <div class="chart-wrap"><table aria-label="Consonants on the IPA chart"><thead><tr id="places"><th class="corner" aria-label=""></th></tr></thead><tbody id="chart-body"></tbody></table></div>
+      <section class="answer-area" aria-label="Answer the blank labels">
+        <p class="hint" id="hint"></p>
+        <div id="choice-ui"><span class="sr-only">Available labels</span><div class="choice-bank" id="choice-bank"></div></div>
+        <div class="assignments" id="assignments"></div>
+        <div class="actions"><button class="check" id="check">Check answer</button><button id="new-question">New chart</button><p id="feedback" class="feedback" aria-live="polite"></p></div>
+      </section>
+    </section>
+  </main>
+  <script>
+    const places=['bilabial','labiodental','dental','alveolar','postalveolar','retroflex','palatal','velar','uvular','pharyngeal','glottal'];
+    const rows=[
+      ['stop',{bilabial:'p b',alveolar:'t d',retroflex:'ʈ ɖ',palatal:'c ɟ',velar:'k ɡ',uvular:'q ɢ',glottal:'ʔ'}],
+      ['nasal',{bilabial:'m',labiodental:'ɱ',alveolar:'n',retroflex:'ɳ',palatal:'ɲ',velar:'ŋ',uvular:'ɴ'}],
+      ['affricate',{alveolar:'ts dz',postalveolar:'tʃ dʒ'}],
+      ['fricative',{bilabial:'ɸ β',labiodental:'f v',dental:'θ ð',alveolar:'s z',postalveolar:'ʃ ʒ',retroflex:'ʂ ʐ',palatal:'ç ʝ',velar:'x ɣ',uvular:'χ ʁ',pharyngeal:'ħ ʕ',glottal:'h ɦ'}],
+      ['rhotic',{alveolar:'ɾ ɹ r',retroflex:'ɻ'}],
+      ['lateral',{alveolar:'l ɬ',retroflex:'ɭ',palatal:'ʎ',velar:'ʟ'}],
+      ['glide',{bilabial:'w',palatal:'j',velar:'ɰ'}]
+    ];
+    const distractors=['ɓ','ɗ','ʄ','ɠ','ʛ','ʍ','ɥ','ʜ','ʢ','ʡ','ɕ','ʑ','ɺ','ɧ','ʘ','ǀ','ǃ','ǂ','ǁ'];
+    const blankCounts={choice:{easy:2,medium:4,hard:6},blank:{easy:1,medium:3,hard:5}};
+    const state={symbolSet:'basic',format:'choice',difficulty:'easy',focus:{column:true,row:true,symbol:true},axis:'column',blanks:[],answers:[],choiceOrder:[],checked:false};
+    const basicSymbols=new Set('p b t d k g ʔ m n ŋ ɾ f v θ ð s z ʃ ʒ h tʃ dʒ l ɹ j w i ɪ ɛ æ ə ʌ ɑ ɔ ʊ u'.split(' '));
+    const intermediateSymbols=new Set([...basicSymbols,...'ɸ β x ɣ q c ɦ ç ɬ r ʂ ʐ χ ʁ y ɨ ɯ ø l̩ ɹ̩ n̩ m̩'.split(' ')]);
+    const $=id=>document.getElementById(id);
+    const shuffled=a=>[...a].sort(()=>Math.random()-.5);
+    const valueOf=item=>typeof item==='string'?item:item.symbol;
+    const title=item=>{ const value=valueOf(item); return value==='postalveolar'?'post-alveolar':value==='dental'?'(inter)dental':value; };
+    const headerTitle=place=>place==='labiodental'?'labio&shy;dental':place==='dental'?'(inter)&shy;dental':place==='retroflex'?'retro&shy;flex':title(place);
+    const blankLabel=index=>`Blank ${state.axis} ${index+1}`;
+    const chartBlankLabel=index=>state.axis==='symbol'?String(index+1):blankLabel(index);
+    function allowedSymbols(){
+      if(state.symbolSet==='advanced') return null;
+      return state.symbolSet==='basic'?basicSymbols:intermediateSymbols;
+    }
+    function visibleSymbols(symbols){
+      const allowed=allowedSymbols();
+      return symbols.split(' ').filter(symbol=>!allowed||allowed.has(symbol)||(symbol==='ɡ'&&allowed.has('g')));
+    }
+    function currentSymbolCells(){ return rows.flatMap(([manner,cells],rowIndex)=>places.filter(place=>cells[place]&&visibleSymbols(cells[place]).length).map(place=>({manner,rowIndex,place,symbols:visibleSymbols(cells[place])}))); }
+    function newQuestion(){
+      const count=blankCounts[state.format][state.difficulty];
+      let axes=(state.format==='choice'?['column','row','symbol']:['column','row']).filter(axis=>state.focus[axis]);
+      if(!axes.length){
+        state.format='choice'; document.querySelectorAll('[data-format]').forEach(button=>button.classList.toggle('active',button.dataset.format==='choice'));
+        axes=['symbol'];
+      }
+      state.axis=shuffled(axes)[0];
+      const labels=state.axis==='column'?places:state.axis==='row'?rows.map(([manner])=>manner):currentSymbolCells();
+      state.blanks=state.axis==='symbol'
+        ? shuffled(labels).slice(0,count).map(cell=>({...cell,symbol:shuffled(cell.symbols)[0]})).sort((a,b)=>a.rowIndex-b.rowIndex||places.indexOf(a.place)-places.indexOf(b.place))
+        : shuffled(labels).slice(0,count).sort((a,b)=>labels.indexOf(a)-labels.indexOf(b));
+      state.answers=Array(count).fill('');
+      state.choiceOrder=shuffled([...state.blanks.map(valueOf),...(state.axis==='symbol'?[shuffled(distractors)[0]]:[])]);
+      state.checked=false;
+      $('feedback').textContent=''; $('feedback').className='feedback'; render();
+    }
+    function render(){
+      const optionNoun=state.axis==='symbol'?'symbol':'label';
+      $('places').innerHTML='<th class="corner" aria-label=""></th>'+places.map(place=>state.axis==='column'&&state.blanks.includes(place)?`<th class="blank" data-blank-index="${state.blanks.indexOf(place)}"><span>${chartBlankLabel(state.blanks.indexOf(place))}</span></th>`:`<th>${headerTitle(place)}</th>`).join('');
+      $('chart-body').innerHTML=rows.map(([manner,cells])=>`<tr>${state.axis==='row'&&state.blanks.includes(manner)?`<th scope="row" class="row blank" data-blank-index="${state.blanks.indexOf(manner)}"><span>${chartBlankLabel(state.blanks.indexOf(manner))}</span></th>`:`<th scope="row" class="row">${manner}</th>`}${places.map(place=>{
+        const symbols=cells[place]?visibleSymbols(cells[place]):[]; if(!symbols.length) return '<td class="empty">·</td>';
+        const content=symbols.map(symbol=>{ const index=state.axis==='symbol'?state.blanks.findIndex(target=>target.manner===manner&&target.place===place&&target.symbol===symbol):-1; return index>=0?`<span class="symbol-blank" data-blank-index="${index}">${chartBlankLabel(index)}</span>`:symbol; }).join(' ');
+        return `<td>${content}</td>`;
+      }).join('')}</tr>`).join('');
+      $('assignments').innerHTML=state.format==='choice'
+        ? state.blanks.map((_,i)=>`<button type="button" class="answer-slot ${state.answers[i]?'filled':''}" data-slot="${i}" aria-label="${blankLabel(i)}${state.answers[i]?`: ${title(state.answers[i])}`:', empty'}"><span class="slot-name">${blankLabel(i)}</span>${state.answers[i]?`<span class="slot-value">${title(state.answers[i])}</span>`:`<span class="slot-prompt">Drop a ${optionNoun} here</span>`}</button>`).join('')
+        : state.blanks.map((_,i)=>`<label>${blankLabel(i)}<input data-answer="${i}" autocomplete="off" placeholder="enter answer here"></label>`).join('');
+      $('choice-ui').hidden=state.format!=='choice'; $('choice-bank').innerHTML=state.choiceOrder.map(place=>`<button type="button" class="chip" draggable="true" data-label="${place}" ${state.answers.includes(place)?'disabled':''}>${title(place)}</button>`).join('');
+      $('hint').textContent=state.format==='choice'?`Click ${optionNoun}s in order, or drag them to a blank. Click a filled blank to clear it.`:'Postalveolar, post-alveolar, and palatoalveolar are equivalent; dental, interdental, and (inter)dental are equivalent.';
+      document.querySelectorAll('[data-label]').forEach(button=>{
+        button.addEventListener('click',()=>assignLabel(button.dataset.label,state.answers.findIndex(answer=>!answer)));
+        button.addEventListener('dragstart',event=>event.dataTransfer.setData('text/plain',button.dataset.label));
+      });
+      document.querySelectorAll('[data-slot]').forEach(slot=>{
+        slot.addEventListener('click',()=>{ state.answers[Number(slot.dataset.slot)]=''; render(); });
+        slot.addEventListener('dragover',event=>event.preventDefault());
+        slot.addEventListener('drop',event=>{ event.preventDefault(); assignLabel(event.dataTransfer.getData('text/plain'),Number(slot.dataset.slot)); });
+      });
+    }
+    function assignLabel(label,index){
+      if(index<0||state.answers.includes(label)) return;
+      state.answers[index]=label; render();
+    }
+    const normalize=value=>{
+      let compact=value.trim().toLowerCase().replace(/[\s-]+/g,'');
+      if(['postalveolar','palatoalveolar'].includes(compact)) return 'postalveolar';
+      if(['dental','interdental','(inter)dental'].includes(compact)) return 'dental';
+      if(rows.some(([label])=>compact===`${label}s`)) compact=compact.slice(0,-1);
+      return compact;
+    };
+    function editDistance(a,b){
+      const prior=Array.from({length:b.length+1},(_,i)=>i);
+      for(let i=1;i<=a.length;i++){
+        let previous=prior[0]; prior[0]=i;
+        for(let j=1;j<=b.length;j++){ const saved=prior[j]; prior[j]=Math.min(prior[j]+1,prior[j-1]+1,previous+(a[i-1]===b[j-1]?0:1)); previous=saved; }
+      }
+      return prior[b.length];
+    }
+    function specialFeedback(expected,entry){
+      const submitted=entry.trim().toLowerCase().replace(/[\s-]+/g,'');
+      if(expected==='stop'&&['plosive','plosives'].includes(submitted)) return "The term 'plosive' is also used, but I was looking for 'stop'.";
+      if(expected==='affricate'&&['affricative','affricatives'].includes(submitted)) return "Not quite! The term is 'affricate', not 'affricative'.";
+      return '';
+    }
+    function check(){
+      const entries=state.format==='choice'?state.answers:[...document.querySelectorAll('[data-answer]')].map(field=>field.value);
+      const results=entries.map((entry,index)=>({correct:normalize(entry)===normalize(valueOf(state.blanks[index])),near:!!normalize(entry)&&editDistance(normalize(entry),normalize(valueOf(state.blanks[index])))<=2}));
+      document.querySelectorAll('.correct-answer,.special-feedback').forEach(note=>note.remove());
+      results.forEach((result,index)=>{
+        const header=document.querySelector(`[data-blank-index="${index}"]`);
+        header.classList.remove('correct','near','incorrect');
+        header.classList.add(result.correct?'correct':result.near?'near':'incorrect');
+        header.innerHTML=`<span>${title(state.blanks[index])}</span>`;
+        if(state.format==='blank'){
+          const field=document.querySelector(`[data-answer="${index}"]`).parentElement;
+          field.insertAdjacentHTML('beforeend',`<span class="correct-answer">Correct: ${title(state.blanks[index])}</span>`);
+          const note=specialFeedback(state.blanks[index],entries[index]);
+          if(note) field.insertAdjacentHTML('beforeend',`<span class="special-feedback">${note}</span>`);
+        }
+      });
+      const correct=results.filter(result=>result.correct).length;
+      const allCorrect=correct===state.blanks.length;
+      $('feedback').textContent=allCorrect?'Correct — every label is in the right place.':`${correct} of ${state.blanks.length} labels are correct. The chart now shows the correct labels.`;
+      $('feedback').className=`feedback ${allCorrect?'good':'bad'}`;
+      state.checked=true;
+    }
+    document.querySelectorAll('[data-format]').forEach(button=>button.addEventListener('click',()=>{state.format=button.dataset.format; document.querySelectorAll('[data-format]').forEach(b=>b.classList.toggle('active',b===button)); newQuestion();}));
+    document.querySelectorAll('[data-difficulty]').forEach(button=>button.addEventListener('click',()=>{state.difficulty=button.dataset.difficulty; document.querySelectorAll('[data-difficulty]').forEach(b=>b.classList.toggle('active',b===button)); newQuestion();}));
+    document.querySelectorAll('[data-focus]').forEach(button=>button.addEventListener('click',()=>{
+      const focus=button.dataset.focus;
+      if(state.focus[focus]&&Object.values(state.focus).filter(Boolean).length===1) return;
+      state.focus[focus]=!state.focus[focus]; button.classList.toggle('active',state.focus[focus]); button.setAttribute('aria-pressed',String(state.focus[focus]));
+      if(state.format==='blank'&&!state.focus.column&&!state.focus.row){ state.format='choice'; document.querySelectorAll('[data-format]').forEach(item=>item.classList.toggle('active',item.dataset.format==='choice')); }
+      newQuestion();
+    }));
+    $('symbol-set').addEventListener('change',event=>{ state.symbolSet=event.target.value; newQuestion(); });
+    document.addEventListener('keydown',event=>{
+      if(state.checked&&['Enter',' ','Spacebar','ArrowRight'].includes(event.key)){ event.preventDefault(); newQuestion(); return; }
+      if(event.key!=='Enter') return;
+      const complete=state.format==='choice'?state.answers.every(Boolean):[...document.querySelectorAll('[data-answer]')].every(field=>field.value.trim());
+      if(complete){ event.preventDefault(); check(); }
+    });
+    $('new-question').addEventListener('click',newQuestion); $('check').addEventListener('click',check); newQuestion();
+  </script>
+</body>
+</html>

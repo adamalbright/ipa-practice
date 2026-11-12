@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practice articulatory descriptions and IPA symbols.">
+  <title>IPA Practice: descriptions</title>
+  <style>
+    :root { --ink:#16221f; --muted:#566862; --paper:#f7f4ec; --panel:#fffdf8; --line:#d7ddd4; --forest:#1f5b48; --sun:#f3c95c; --mist:#e3eee7; --bad:#8c3428; }
+    * { box-sizing:border-box; } body { margin:0; color:var(--ink); background:var(--paper); font:16px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; }
+    main { width:min(960px,calc(100% - 32px)); margin:0 auto; padding:52px 0 72px; } header { display:grid; grid-template-columns:1fr auto; gap:24px; align-items:end; border-bottom:1px solid var(--line); padding-bottom:28px; }
+    h1 { margin:0; font-family:Georgia,serif; font-size:clamp(2.1rem,6vw,4.5rem); line-height:.94; letter-spacing:-.05em; } h2 { font-family:Georgia,serif; margin:0 0 12px; } .back { display:inline-block; color:var(--forest); font-weight:700; margin:0 0 15px; text-decoration:none; } .eyebrow { color:var(--forest); font-size:.77rem; font-weight:750; letter-spacing:.12em; text-transform:uppercase; margin:0 0 12px; }.lede { max-width:630px; color:var(--muted); margin:22px 0 0; }
+    .controls { display:flex; flex-wrap:wrap; gap:10px; margin:30px 0 18px; }
+    button,select { font:inherit; border:1px solid var(--line); background:var(--panel); color:var(--ink); min-height:44px; padding:9px 13px; border-radius:9px; cursor:pointer; } button:hover,button:focus { border-color:var(--forest); } button.active { background:var(--forest); color:#fff; border-color:var(--forest); } select { cursor:pointer; } .control-label { display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-size:.86rem; font-weight:700; }
+    .card { background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:clamp(22px,4vw,42px); box-shadow:0 8px 26px rgba(22,34,31,.05); }.prompt { color:var(--muted); font-weight:650; margin:0 0 12px; }.symbol { font-family:"Doulos SIL","Charis SIL","Arial Unicode MS",sans-serif; font-size:clamp(4.5rem,13vw,8rem); line-height:1; margin:4px 0 32px; }.description { font-family:Georgia,serif; font-size:clamp(1.6rem,4vw,2.4rem); line-height:1.15; margin:4px 0 32px; max-width:700px; }
+    .answers { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }.answer { text-align:left; min-height:70px; line-height:1.25; }.answer.correct { background:var(--mist); border-color:var(--forest); }.answer.incorrect { background:#f7e8e4; border-color:var(--bad); }.feedback { min-height:28px; margin:20px 0 0; color:var(--muted); }.feedback.good { color:var(--forest); font-weight:700; }.feedback.bad { color:var(--bad); font-weight:700; }.next { margin-top:16px; background:var(--ink); color:#fff; border-color:var(--ink); }
+    .study { margin-top:22px; border:1px solid var(--line); border-radius:14px; padding:20px 22px; background:var(--mist); }.study h2 { font-size:1.45rem; }.study h3 { color:var(--muted); font-size:.86rem; letter-spacing:.08em; text-transform:uppercase; margin:16px 0 4px; }.study button { min-height:34px; padding:5px 9px; font-size:.85rem; }.study p { color:var(--muted); margin:0 0 8px; }.study ul { margin:7px 0 0; padding-left:20px; }.study li { margin:3px 0; }.summary { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin-bottom:22px; }.summary-head { display:flex; justify-content:space-between; align-items:baseline; gap:16px; }.summary-score { color:var(--ink)!important; font-weight:750; margin:0!important; }.progress-track { height:8px; background:#d7ddd4; border-radius:999px; overflow:hidden; margin-top:10px; }.progress-fill { width:0%; height:100%; background:var(--forest); border-radius:inherit; transition:width .25s ease; }.study-separator { border:0; border-top:1px solid var(--line); margin:22px 0 18px; }.symbols-instruction { font-size:.9rem; }.missed-wrap { margin-top:6px; overflow-x:auto; }.missed-table { border-collapse:separate; border-spacing:2px; min-width:0; width:auto; }.missed-table td { width:42px; height:36px; padding:0; text-align:center; vertical-align:middle; border-radius:6px; }.study button.missed-symbol,.missed-symbol { font-family:"Doulos SIL","Charis SIL","Arial Unicode MS",sans-serif; font-size:1.25rem; line-height:1; color:var(--forest); background:transparent; border:0; min-height:30px; min-width:30px; padding:1px; }.missed-symbol:hover,.missed-symbol:focus { background:#fff; }.missed-static { color:var(--ink); }.vowel-table td { width:auto; min-width:42px; padding:0 3px; white-space:nowrap; }.vowel-table .missed-symbol { margin:0 1px; }.audio-credit { margin-top:9px!important; font-size:.78rem; }.audio-credit a { color:var(--forest); }.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    .inventory { margin-top:38px; }.inventory summary { cursor:pointer; color:var(--forest); font-weight:700; }.inventory-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:10px; padding-top:18px; }.entry { border-top:1px solid var(--line); padding:9px 0; color:var(--muted); }.entry b { font-family:"Doulos SIL","Arial Unicode MS",sans-serif; color:var(--ink); font-size:1.35rem; margin-right:8px; }.attribution { color:var(--muted); font-size:.85rem; margin:24px 0 0; }.attribution a { color:var(--forest); }
+    @media (max-width:620px) { main { width:min(100% - 24px,960px); padding-top:30px; } header { grid-template-columns:1fr; } .badge { justify-self:start; }.answers { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div><a class="back" href="index.html">← All practice exercises</a><h1>IPA Practice: descriptions</h1></div>
+    </header>
+    <section class="controls" aria-label="Practice settings">
+      <label class="control-label">Symbol set <select id="level" aria-label="Symbol set"><option value="easy">Basic</option><option value="medium">Intermediate</option><option value="hard">Advanced</option></select></label>
+      <button class="active" data-mode="description">Description → symbol</button>
+      <button data-mode="symbol">Symbol → description</button>
+      <label class="control-label" id="difficulty-control">Difficulty <select id="difficulty" aria-label="Difficulty"><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option></select></label>
+      <button id="new" title="New question">New question</button>
+    </section>
+    <section class="card" aria-live="polite">
+      <p class="prompt" id="prompt"></p>
+      <div id="question"></div>
+      <div id="answers" class="answers"></div>
+      <p id="feedback" class="feedback"></p>
+      <button id="next" class="next" hidden>Next question</button>
+    </section>
+    <aside class="study" aria-live="polite">
+      <section class="summary"><div class="summary-head"><p id="score" class="summary-score">No answers yet.</p><button id="reset-progress">Clear report</button></div><div class="progress-track" id="progress-track" role="progressbar" aria-label="Percent correct" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-fill" id="progress-fill"></div></div></section>
+      <h2>Features to study</h2>
+      <div id="focus"></div>
+      <div id="missed-symbols"></div>
+    </aside>
+    <details class="inventory"><summary>Review the symbol set for this level</summary><div id="inventory" class="inventory-grid"></div></details>
+    <p class="attribution">Source of sound files: <a href="https://www.internationalphoneticassociation.org/IPAcharts/IPA_charts_EI/IPA_charts_EI.html" target="_blank" rel="noopener">International Phonetics Association Interactive IPA Chart</a>. (See chart for additional review)</p>
+  </main>
+  <script>
+    let inventory, state = { level:'easy', mode:'description', difficulty:'easy', item:null, answered:false };
+    const $ = id => document.getElementById(id);
+    const shuffle = a => [...a].sort(() => Math.random() - .5);
+    const progressKey='ipa-practice-lab-progress-v3';
+    let progress = (()=>{ try { const saved=JSON.parse(localStorage.getItem(progressKey)||localStorage.getItem('ipa-practice-lab-progress-v2')||'{}'); return {...{attempted:0,correct:0,misses:{},missedSymbols:{}},...saved,missedSymbols:saved.missedSymbols||{}}; } catch { return {attempted:0,correct:0,misses:{},missedSymbols:{}}; } })();
+    function currentItems(){ return inventory.levels[state.level].items; }
+    function renderInventory(){ $('inventory').innerHTML = currentItems().map(x => `<div class="entry"><b>${x.symbol}</b>${x.canonical}</div>`).join(''); }
+    const consonantFeatures = {
+      voicing:['voiceless','voiced'],
+      place:['bilabial','labiodental','dental','alveolar','postalveolar','retroflex','palatal','velar','uvular','pharyngeal','glottal'],
+      manner:['lateral affricate','lateral fricative','lateral approximant','affricate','fricative','nasal','trill','tap','flap','stop','rhotic','lateral','glide','approximant']
+    };
+    const vowelFeatures = { height:['high','mid','low'], backness:['front','central','back'], rounding:['unrounded','rounded'], tenseness:['tense','lax'] };
+    function featureValue(text, set){ return [...set].sort((a,b)=>b.length-a.length).find(value=>text.includes(value)); }
+    function featureDifferences(item, selected){
+      const sets=item.kind==='vowel' ? vowelFeatures : consonantFeatures;
+      return Object.entries(sets).map(([feature,values])=>({feature,expected:featureValue(item.canonical,values),chosen:featureValue(selected,values)})).filter(({expected,chosen})=>expected && chosen && expected!==chosen);
+    }
+    function featureDistance(item, candidate){
+      if(item.kind!==candidate.kind) return Infinity;
+      const sets=item.kind==='vowel' ? vowelFeatures : consonantFeatures;
+      let compared=0, differences=0;
+      Object.values(sets).forEach(values=>{ const a=featureValue(item.canonical,values), b=featureValue(candidate.canonical,values); if(a&&b){ compared++; if(a!==b) differences++; } });
+      return compared ? differences : Infinity;
+    }
+    const reviewPlaces=['bilabial','labiodental','dental','alveolar','postalveolar','retroflex','palatal','velar','uvular','pharyngeal','glottal'];
+    const reviewManners=['stop','nasal','affricate','fricative','liquid','glide','other'];
+    function reviewPlace(item){
+      const text=item.canonical;
+      if(text.includes('labiovelar')||text.includes('labial-velar')) return 'velar';
+      if(text.includes('labial-palatal')||text.includes('alveolo-palatal')||text.includes('palatoalveolar')) return 'palatal';
+      if(text.includes('epiglottal')) return 'pharyngeal';
+      return reviewPlaces.find(place=>text.includes(place))||null;
+    }
+    function reviewManner(item){
+      const text=item.canonical;
+      if(text.includes('affricate')) return 'affricate';
+      if(text.includes('nasal')) return 'nasal';
+      if(text.includes('fricative')) return 'fricative';
+      if(text.includes('stop')||text.includes('implosive')||text.includes('ejective')) return 'stop';
+      if(text.includes('glide')) return 'glide';
+      if(text.includes('lateral')||text.includes('rhotic')||text.includes('tap')||text.includes('flap')||text.includes('trill')) return 'liquid';
+      return 'other';
+    }
+    function audioCode(symbol){
+      const special={g:'0261'}; if(special[symbol]) return special[symbol];
+      return [...symbol].length===1 ? symbol.codePointAt(0).toString(16).toUpperCase().padStart(4,'0') : null;
+    }
+    function renderMissedSymbols(){
+      const allItems=Object.values(inventory.levels).flatMap(level=>level.items);
+      const missed=Object.entries(progress.missedSymbols).map(([symbol,count])=>({item:allItems.find(item=>item.symbol===symbol),count})).filter(({item})=>item);
+      const consonants=missed.filter(({item})=>item.kind==='consonant'&&reviewPlace(item)&&reviewManner(item));
+      const vowels=missed.filter(({item})=>item.kind==='vowel');
+      if(!consonants.length&&!vowels.length){ $('missed-symbols').innerHTML=''; return; }
+      const symbolButton=({item,count})=>{ const code=audioCode(item.symbol), title=`${item.symbol} — missed ${count} ${count===1?'time':'times'}`; return code ? `<button class="missed-symbol" data-audio="https://www.internationalphoneticassociation.org/IPAcharts/common_files/sounds/JH/${code}.mp3" title="${title}; play J. House recording" aria-label="${title}; play J. House recording">${item.symbol}</button>` : `<span class="missed-symbol missed-static" title="${title}">${item.symbol}</span>`; };
+      const consonantCell=(manner,place)=>consonants.filter(({item})=>reviewManner(item)===manner&&reviewPlace(item)===place).map(symbolButton).join('');
+      const activeManners=reviewManners.filter(manner=>consonants.some(({item})=>reviewManner(item)===manner));
+      const activePlaces=reviewPlaces.filter(place=>consonants.some(({item})=>reviewPlace(item)===place));
+      const consonantTable=consonants.length ? `<div class="missed-wrap"><table class="missed-table"><caption class="sr-only">Missed consonant symbols, arranged by manner of articulation and IPA place of articulation</caption><tbody>${activeManners.map(manner=>`<tr><th scope="row" class="sr-only">${manner}</th>${activePlaces.map(place=>`<td aria-label="${manner}, ${place}">${consonantCell(manner,place)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>` : '';
+      const vowelHeights=['high','mid','low'], vowelBackness=['front','central','back'];
+      const vowelRank=item=>({"unrounded tense":0,"unrounded lax":1,"rounded tense":2,"rounded lax":3}[`${item.canonical.includes('unrounded')?'unrounded':'rounded'} ${item.canonical.includes('lax')?'lax':'tense'}`] ?? 4);
+      const vowelCell=(height,backness)=>vowels.filter(({item})=>item.canonical.includes(height)&&item.canonical.includes(backness)).sort((a,b)=>vowelRank(a.item)-vowelRank(b.item)).map(symbolButton).join('');
+      const activeHeights=vowelHeights.filter(height=>vowels.some(({item})=>item.canonical.includes(height)));
+      const activeBackness=vowelBackness.filter(backness=>vowels.some(({item})=>item.canonical.includes(backness)));
+      const vowelTable=vowels.length ? `<div class="missed-wrap"><table class="missed-table vowel-table"><caption class="sr-only">Missed vowel symbols, arranged by height and backness</caption><tbody>${activeHeights.map(height=>`<tr><th scope="row" class="sr-only">${height}</th>${activeBackness.map(backness=>`<td aria-label="${height}, ${backness}">${vowelCell(height,backness)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>` : '';
+      $('missed-symbols').innerHTML=`<hr class="study-separator"><h2>Symbols to study</h2><p class="symbols-instruction">Click on a symbol to hear it pronounced</p>${consonantTable}${vowelTable}`;
+    }
+    function descriptionChoices(items,item){
+      const scored=items.filter(candidate=>candidate.symbol!==item.symbol).map(candidate=>({candidate,distance:featureDistance(item,candidate)}));
+      const finite=scored.filter(({distance})=>Number.isFinite(distance)); const pool=finite.length>=3 ? finite : scored;
+      let foils;
+      if(state.difficulty==='hard') foils=shuffle(pool).sort((a,b)=>a.distance-b.distance).slice(0,3);
+      else if(state.difficulty==='easy') foils=shuffle(pool).sort((a,b)=>b.distance-a.distance).slice(0,3);
+      else { const distances=pool.map(({distance})=>distance).filter(Number.isFinite); if(!distances.length) foils=shuffle(pool).slice(0,3); else { const midpoint=(Math.min(...distances)+Math.max(...distances))/2; foils=shuffle(pool).sort((a,b)=>Math.abs(a.distance-midpoint)-Math.abs(b.distance-midpoint)).slice(0,3); } }
+      return shuffle([{label:item.symbol,correct:true},...foils.map(({candidate})=>({label:candidate.symbol,correct:false}))]);
+    }
+    function renderStudy(){
+      const percent=progress.attempted ? Math.round((progress.correct/progress.attempted)*100) : 0;
+      $('score').textContent=progress.attempted ? `${progress.correct} of ${progress.attempted} correct (${percent}%)` : 'No answers yet.';
+      $('progress-fill').style.width=`${percent}%`; $('progress-track').setAttribute('aria-valuenow',percent);
+      const groups=Object.entries(progress.misses).map(([feature,values])=>[feature,Object.entries(values).sort((a,b)=>b[1]-a[1])]).filter(([,values])=>values.length).sort((a,b)=>b[1].reduce((n,[,count])=>n+count,0)-a[1].reduce((n,[,count])=>n+count,0));
+      $('focus').innerHTML=groups.length ? `<p>Focus your review on:</p>${groups.map(([feature,values])=>`<section><h3>${feature}</h3><ul>${values.map(([value,count])=>`<li><strong>${value}</strong> — missed ${count} ${count===1?'time':'times'}</li>`).join('')}</ul></section>`).join('')}` : '';
+      if(inventory) renderMissedSymbols();
+    }
+    function recordAnswer(correct, differences){
+      progress.attempted++; if(correct) progress.correct++; else differences.forEach(({feature,expected})=>{ progress.misses[feature]??={}; progress.misses[feature][expected]=(progress.misses[feature][expected]||0)+1; });
+      if(!correct) progress.missedSymbols[state.item.symbol]=(progress.missedSymbols[state.item.symbol]||0)+1;
+      localStorage.setItem(progressKey,JSON.stringify(progress)); renderStudy();
+    }
+    function mutate(text, feature, sets){
+      const from=featureValue(text,sets[feature]); if(!from) return null;
+      const alternatives=sets[feature].filter(value=>value!==from);
+      const to=alternatives[Math.floor(Math.random()*alternatives.length)];
+      const displayedFrom=from==='dental'&&text.includes('(inter)dental')?'(inter)dental':from;
+      return text.replace(displayedFrom,to);
+    }
+    function featureChoices(item){
+      const canonical=item.canonical; const sets=item.kind==='vowel' ? vowelFeatures : consonantFeatures;
+      const mutations=Object.keys(sets).map(feature=>mutate(canonical,feature,sets));
+      return mutations.every(Boolean) ? mutations : null;
+    }
+    function symbolChoices(items,item){
+      const standard=featureChoices(item);
+      if(state.difficulty==='hard' && standard) return shuffle([{label:item.canonical,correct:true},...standard.map(label=>({label,correct:false}))]);
+      if(state.difficulty==='medium' && standard){
+        const near=shuffle(standard).slice(0,2).map(label=>({label,correct:false}));
+        const pool=items.filter(x=>x.symbol!==item.symbol && !near.some(choice=>choice.label===x.canonical));
+        const far=pool[Math.floor(Math.random()*pool.length)];
+        return shuffle([{label:item.canonical,correct:true},...near,{label:far.canonical,correct:false}]);
+      }
+      const wrong=shuffle(items.filter(x=>x.symbol!==item.symbol)).slice(0,3);
+      return shuffle([{label:item.canonical,correct:true},...wrong.map(x=>({label:x.canonical,correct:false}))]);
+    }
+    function newQuestion(){
+      state.answered=false; const items=currentItems(); state.item=items[Math.floor(Math.random()*items.length)];
+      $('feedback').textContent=''; $('feedback').className='feedback'; $('next').hidden=true;
+      const symbolMode=state.mode==='symbol'; const choices=symbolMode ? symbolChoices(items,state.item) : descriptionChoices(items,state.item);
+      const fallback = symbolMode && state.difficulty!=='easy' && !featureChoices(state.item);
+      $('prompt').textContent=symbolMode ? 'Choose the best phonetic description.' : 'Choose the matching phonetic symbol.';
+      $('question').innerHTML=symbolMode ? `<div class="symbol">${state.item.symbol}</div>` : `<div class="description">${state.item.canonical}</div>`;
+      const displayedChoices=choices.map(x=>({ ...x, comparison:symbolMode ? x.label : items.find(item=>item.symbol===x.label).canonical }));
+      $('answers').innerHTML=displayedChoices.map(x=>`<button class="answer" data-correct="${x.correct}" data-description="${x.comparison}">${symbolMode ? x.label : `<span class="symbol" style="font-size:2.7rem;margin:0">${x.label}</span>`}</button>`).join('');
+      if(fallback) $('feedback').textContent='This special articulation currently uses standard distractors; feature-balanced hard distractors will be added with its reviewed terminology.';
+      document.querySelectorAll('.answer').forEach(b=>b.addEventListener('click',()=>answer(b)));
+    }
+    function answer(button){
+      if(state.answered) return; state.answered=true; const correct=button.dataset.correct==='true'; const differences=correct ? [] : featureDifferences(state.item,button.dataset.description);
+      document.querySelectorAll('.answer').forEach(b=>{ if(b.dataset.correct==='true') b.classList.add('correct'); });
+      if(correct){ $('feedback').textContent='Correct.'; $('feedback').className='feedback good'; } else { button.classList.add('incorrect'); const focus=differences.length ? ` Focus on: ${differences.map(({expected})=>expected).join(', ')}.` : ''; $('feedback').textContent=`The answer is ${state.item.symbol} — ${state.item.canonical}.${focus}`; $('feedback').className='feedback bad'; }
+      recordAnswer(correct,differences);
+      $('next').hidden=false;
+    }
+    function selectMode(mode){ state.mode=mode; document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode)); newQuestion(); }
+    const embeddedInventory={
+  "title": "IPA Practice Lab inventory",
+  "variety": "General American English, with additional core IPA sounds for broader practice",
+  "rules": {
+    "vowelFeatures": ["height", "backness", "rounding", "tenseness"],
+    "consonantFeatures": ["voicing", "place", "manner"],
+    "note": "The canonical label is editable course terminology. Accepted labels may omit features explicitly marked optional."
+  },
+  "levels": {
+    "easy": {
+      "label": "Basic",
+      "description": "Core General American English segments",
+      "items": [
+        {"symbol":"p","kind":"consonant","canonical":"voiceless bilabial stop"},{"symbol":"b","kind":"consonant","canonical":"voiced bilabial stop"},{"symbol":"t","kind":"consonant","canonical":"voiceless alveolar stop"},{"symbol":"d","kind":"consonant","canonical":"voiced alveolar stop"},{"symbol":"k","kind":"consonant","canonical":"voiceless velar stop"},{"symbol":"g","kind":"consonant","canonical":"voiced velar stop"},{"symbol":"ʔ","kind":"consonant","canonical":"voiceless glottal stop"},
+        {"symbol":"m","kind":"consonant","canonical":"voiced bilabial nasal"},{"symbol":"n","kind":"consonant","canonical":"voiced alveolar nasal"},{"symbol":"ŋ","kind":"consonant","canonical":"voiced velar nasal"},{"symbol":"ɾ","kind":"consonant","canonical":"voiced alveolar flap/tap"},
+        {"symbol":"f","kind":"consonant","canonical":"voiceless labiodental fricative"},{"symbol":"v","kind":"consonant","canonical":"voiced labiodental fricative"},{"symbol":"θ","kind":"consonant","canonical":"voiceless (inter)dental fricative","accepted":["voiceless dental fricative","voiceless interdental fricative"]},{"symbol":"ð","kind":"consonant","canonical":"voiced (inter)dental fricative","accepted":["voiced dental fricative","voiced interdental fricative"]},{"symbol":"s","kind":"consonant","canonical":"voiceless alveolar fricative"},{"symbol":"z","kind":"consonant","canonical":"voiced alveolar fricative"},{"symbol":"ʃ","kind":"consonant","canonical":"voiceless postalveolar fricative"},{"symbol":"ʒ","kind":"consonant","canonical":"voiced postalveolar fricative"},{"symbol":"h","kind":"consonant","canonical":"voiceless glottal fricative"},
+        {"symbol":"tʃ","kind":"consonant","canonical":"voiceless postalveolar affricate"},{"symbol":"dʒ","kind":"consonant","canonical":"voiced postalveolar affricate"},{"symbol":"l","kind":"consonant","canonical":"voiced alveolar lateral"},{"symbol":"ɹ","kind":"consonant","canonical":"voiced alveolar rhotic approximant"},{"symbol":"j","kind":"consonant","canonical":"voiced palatal glide"},{"symbol":"w","kind":"consonant","canonical":"voiced labiovelar glide"},
+        {"symbol":"i","kind":"vowel","canonical":"high front unrounded tense vowel"},{"symbol":"ɪ","kind":"vowel","canonical":"high front unrounded lax vowel"},{"symbol":"ɛ","kind":"vowel","canonical":"mid front unrounded lax vowel"},{"symbol":"æ","kind":"vowel","canonical":"low front unrounded lax vowel"},{"symbol":"ə","kind":"vowel","canonical":"mid central unrounded lax vowel","accepted":["mid central unrounded vowel"]},{"symbol":"ʌ","kind":"vowel","canonical":"mid back unrounded lax vowel","accepted":["mid back unrounded vowel"]},{"symbol":"ɑ","kind":"vowel","canonical":"low back unrounded tense vowel","accepted":["low back unrounded vowel"]},{"symbol":"ɔ","kind":"vowel","canonical":"mid back rounded lax vowel"},{"symbol":"ʊ","kind":"vowel","canonical":"high back rounded lax vowel"},{"symbol":"u","kind":"vowel","canonical":"high back rounded tense vowel"}
+      ]
+    },
+    "medium": {
+      "label": "Intermediate",
+      "description": "Selected additional IPA sounds and syllabic segments; expandable",
+      "items": [
+        {"symbol":"ɸ","kind":"consonant","canonical":"voiceless bilabial fricative"},{"symbol":"β","kind":"consonant","canonical":"voiced bilabial fricative"},{"symbol":"x","kind":"consonant","canonical":"voiceless velar fricative"},{"symbol":"ɣ","kind":"consonant","canonical":"voiced velar fricative"},{"symbol":"q","kind":"consonant","canonical":"voiceless uvular stop"},{"symbol":"c","kind":"consonant","canonical":"voiceless palatal stop"},{"symbol":"ɦ","kind":"consonant","canonical":"voiced glottal fricative"},{"symbol":"ç","kind":"consonant","canonical":"voiceless palatal fricative"},{"symbol":"ɬ","kind":"consonant","canonical":"voiceless alveolar lateral fricative"},{"symbol":"r","kind":"consonant","canonical":"voiced alveolar trill"},{"symbol":"ʂ","kind":"consonant","canonical":"voiceless retroflex fricative"},{"symbol":"ʐ","kind":"consonant","canonical":"voiced retroflex fricative"},{"symbol":"χ","kind":"consonant","canonical":"voiceless uvular fricative"},{"symbol":"ʁ","kind":"consonant","canonical":"voiced uvular fricative"},
+        {"symbol":"y","kind":"vowel","canonical":"high front rounded tense vowel"},{"symbol":"ɨ","kind":"vowel","canonical":"high central unrounded tense vowel"},{"symbol":"ɯ","kind":"vowel","canonical":"high back unrounded tense vowel"},{"symbol":"ø","kind":"vowel","canonical":"mid front rounded tense vowel"},
+        {"symbol":"l̩","kind":"consonant","canonical":"voiced alveolar syllabic lateral"},{"symbol":"ɹ̩","kind":"consonant","canonical":"voiced alveolar syllabic rhotic approximant"},{"symbol":"n̩","kind":"consonant","canonical":"voiced alveolar syllabic nasal"},{"symbol":"m̩","kind":"consonant","canonical":"voiced bilabial syllabic nasal"}
+      ]
+    },
+    "hard": {
+      "label": "Advanced",
+      "description": "All remaining core IPA consonants, including non-pulmonic consonants",
+      "items": [
+        {"symbol":"ʈ","kind":"consonant","canonical":"voiceless retroflex stop"},{"symbol":"ɖ","kind":"consonant","canonical":"voiced retroflex stop"},{"symbol":"ɟ","kind":"consonant","canonical":"voiced palatal stop"},{"symbol":"ɢ","kind":"consonant","canonical":"voiced uvular stop"},
+        {"symbol":"ɱ","kind":"consonant","canonical":"voiced labiodental nasal"},{"symbol":"ɳ","kind":"consonant","canonical":"voiced retroflex nasal"},{"symbol":"ɲ","kind":"consonant","canonical":"voiced palatal nasal"},{"symbol":"ɴ","kind":"consonant","canonical":"voiced uvular nasal"},{"symbol":"ʙ","kind":"consonant","canonical":"voiced bilabial trill"},{"symbol":"ʀ","kind":"consonant","canonical":"voiced uvular trill"},{"symbol":"ⱱ","kind":"consonant","canonical":"voiced labiodental tap"},{"symbol":"ɽ","kind":"consonant","canonical":"voiced retroflex tap"},
+        {"symbol":"ʝ","kind":"consonant","canonical":"voiced palatal fricative"},{"symbol":"ħ","kind":"consonant","canonical":"voiceless pharyngeal fricative"},{"symbol":"ʕ","kind":"consonant","canonical":"voiced pharyngeal fricative"},{"symbol":"ɮ","kind":"consonant","canonical":"voiced alveolar lateral fricative"},
+        {"symbol":"ʋ","kind":"consonant","canonical":"voiced labiodental approximant"},{"symbol":"ɻ","kind":"consonant","canonical":"voiced retroflex approximant"},{"symbol":"ɰ","kind":"consonant","canonical":"voiced velar approximant"},{"symbol":"ɭ","kind":"consonant","canonical":"voiced retroflex lateral approximant"},{"symbol":"ʎ","kind":"consonant","canonical":"voiced palatal lateral approximant"},{"symbol":"ʟ","kind":"consonant","canonical":"voiced velar lateral approximant"},
+        {"symbol":"ʍ","kind":"consonant","canonical":"voiceless labial-velar fricative"},{"symbol":"ɥ","kind":"consonant","canonical":"voiced labial-palatal approximant"},{"symbol":"ʜ","kind":"consonant","canonical":"voiceless epiglottal fricative"},{"symbol":"ʢ","kind":"consonant","canonical":"voiced epiglottal fricative"},{"symbol":"ʡ","kind":"consonant","canonical":"epiglottal stop"},{"symbol":"ɕ","kind":"consonant","canonical":"voiceless alveolo-palatal fricative"},{"symbol":"ʑ","kind":"consonant","canonical":"voiced alveolo-palatal fricative"},{"symbol":"ɺ","kind":"consonant","canonical":"voiced alveolar lateral flap"},{"symbol":"ɧ","kind":"consonant","canonical":"simultaneous voiceless postalveolar and velar fricative"},
+        {"symbol":"ʘ","kind":"consonant","canonical":"bilabial click"},{"symbol":"ǀ","kind":"consonant","canonical":"dental click"},{"symbol":"ǃ","kind":"consonant","canonical":"postalveolar click"},{"symbol":"ǂ","kind":"consonant","canonical":"palatoalveolar click"},{"symbol":"ǁ","kind":"consonant","canonical":"alveolar lateral click"},{"symbol":"ɓ","kind":"consonant","canonical":"voiced bilabial implosive"},{"symbol":"ɗ","kind":"consonant","canonical":"voiced dental or alveolar implosive"},{"symbol":"ʄ","kind":"consonant","canonical":"voiced palatal implosive"},{"symbol":"ɠ","kind":"consonant","canonical":"voiced velar implosive"},{"symbol":"ʛ","kind":"consonant","canonical":"voiced uvular implosive"},
+        {"symbol":"pʼ","kind":"consonant","canonical":"voiceless bilabial ejective stop"},{"symbol":"tʼ","kind":"consonant","canonical":"voiceless dental or alveolar ejective stop"},{"symbol":"kʼ","kind":"consonant","canonical":"voiceless velar ejective stop"},{"symbol":"sʼ","kind":"consonant","canonical":"voiceless alveolar ejective fricative"}
+      ]
+    }
+  }
+}
+; inventory=embeddedInventory; renderInventory(); renderStudy(); newQuestion();
+    const soundPlayer=new Audio();
+    $('level').addEventListener('change',e=>{state.level=e.target.value; renderInventory(); newQuestion();}); $('difficulty').addEventListener('change',e=>{state.difficulty=e.target.value; newQuestion();}); $('new').addEventListener('click',newQuestion); $('next').addEventListener('click',newQuestion); $('reset-progress').addEventListener('click',()=>{ progress={attempted:0,correct:0,misses:{},missedSymbols:{}}; localStorage.removeItem(progressKey); localStorage.removeItem('ipa-practice-lab-progress-v2'); renderStudy(); }); $('missed-symbols').addEventListener('click',event=>{ const button=event.target.closest('[data-audio]'); if(button){ soundPlayer.src=button.dataset.audio; soundPlayer.play().catch(()=>{}); } }); document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>selectMode(b.dataset.mode)));
+    document.addEventListener('keydown',event=>{ if(state.answered&&['Enter',' ','Spacebar','ArrowRight'].includes(event.key)){ event.preventDefault(); newQuestion(); } });
+  </script>
+</body>
+</html>
